@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+	<soap12:Body>
+		<queryFavoriteResponse xmlns="http://rentcar.bbcwx.com/">
+			<queryFavoriteResult>string</queryFavoriteResult>
+			<storesCount>long</storesCount>
+			<stores>
+				<store>
+					<name>string</name>
+					<id>long</id>
+					<address>string</address>
+					<longitude>double</longitude>
+					<latitude>double</latitude>
+					<altitude>double</altitude>
+				</store>
+				<store>
+					<name>string</name>
+					<id>long</id>
+					<address>string</address>
+					<longitude>double</longitude>
+      				<latitude>double</latitude>
+    				<altitude>double</altitude>
+				</store>
+			</stores>
+			<vehiclesCount>long</vehiclesCount>
+			<vehicles>
+				<vehicle>
+					<id>long</id>
+					<brand>string</brand>
+					<model>string</model>
+					<price>string</price>
+      				<dumpEnergy>string</dumpEnergy>
+    				<parkingGarage>string</parkingGarage>
+					<photo>string</photo>
+				</vehicle>
+				<vehicle>
+					<id>long</id>
+					<brand>string</brand>
+					<model>string</model>
+					<price>string</price>
+      				<dumpEnergy>string</dumpEnergy>
+    				<parkingGarage>string</parkingGarage>
+					<photo>string</photo>
+				</vehicle>
+			</vehicles>
+		</queryFavoriteResponse>
+	</soap12:Body>
+</soap12:Envelope>

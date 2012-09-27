@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+	<soap12:Body>
+		<queryOrderResponse xmlns="http://rentcar.bbcwx.com/">
+			<queryOrderResult>string</queryOrderResult>
+			<orderStatus>string</orderStatus>
+			<vehicleModel>string</vehicleModel>
+			<vehicleBrand>string</vehicleBrand>
+			<takeVehicleStoreName>string</takeVehicleStoreName>
+			<takeVehicleDate>long</takeVehicleDate>
+			<returnVehicleStoreName>string</returnVehicleStoreName>
+			<returnVehicleDate>long</returnVehicleDate>
+			<vehicleRents>string</vehicleRents>
+			<addedServiceFee>string<addedServiceFee>
+			<otherFee>string</otherFee>
+		</queryOrderResponse>
+	</soap12:Body>
+</soap12:Envelope>

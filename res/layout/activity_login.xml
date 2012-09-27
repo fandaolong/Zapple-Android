@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2012 Li Cong, forlong401@163.com
+      
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ --> 
+ 
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/default_bg_color">
+
+	<LinearLayout 
+	    android:layout_width="match_parent"
+		android:layout_height="wrap_content" 
+		android:orientation="vertical">	    
+
+		<TextView  
+			android:layout_width="match_parent" 
+			android:layout_height="wrap_content"
+			android:singleLine="true"
+			android:gravity="center"
+			android:text="@string/login_button_text" 
+			android:textAppearance="?android:attr/textAppearanceLargeInverse"
+			android:background="@drawable/title_bg"/>	    
+	    	    
+		<LinearLayout 
+			android:layout_width="match_parent" 
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_margin="5dip"
+			android:padding="5dp">
+			
+			<TextView  
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content"
+				android:minWidth="60dip"
+				android:singleLine="true"
+				android:text="@string/account_label" 
+				android:textAppearance="?android:attr/textAppearanceMedium"/>
+			
+			<EditText 
+			    android:id="@+id/account_edit_text"
+				android:layout_height="wrap_content" 
+				android:layout_width="0dip"
+				android:hint="@string/account_edit_hint" 
+				android:inputType="text"
+				android:lines="1"
+				android:layout_weight="1.0" 
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:background="@drawable/input_selector"/>
+		</LinearLayout>
+
+		<LinearLayout 
+		    android:layout_width="match_parent"
+			android:layout_height="wrap_content" 
+			android:orientation="horizontal"
+			android:layout_margin="5dip"
+			android:padding="5dp">
+
+			<TextView 			    
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content"	
+				android:minWidth="60dip"			
+				android:singleLine="true"
+				android:text="@string/password_label"  
+				android:textAppearance="?android:attr/textAppearanceMedium"/>
+			
+			<EditText 
+			    android:id="@+id/password_edit_text"
+				android:layout_height="wrap_content" 
+				android:layout_width="0dip"
+				android:hint="@string/password_edit_hint" 
+				android:inputType="textPassword"
+				android:lines="1"
+				android:layout_weight="1.0" 
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:background="@drawable/input_selector"/>
+		</LinearLayout>
+
+		<LinearLayout 
+		    android:layout_width="match_parent"
+			android:layout_height="wrap_content" 
+			android:orientation="horizontal"
+			android:padding="5dp">
+			
+			<CheckBox 			     
+			    android:id="@+id/remember_check_box"
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="60dip"
+				android:checked="true"				
+				android:textAppearance="?android:attr/textAppearanceMedium"/>
+			
+			<TextView 			    
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content"	
+				android:minWidth="100dip"			
+				android:singleLine="true"
+				android:text="@string/remember_password_label"  
+				android:textAppearance="?android:attr/textAppearanceMedium"/>								
+		</LinearLayout>
+			
+		<LinearLayout
+		    android:layout_width="match_parent" 
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical"
+		    android:gravity="center">
+			
+			<Button 			    
+			    android:id="@+id/login_button"
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content"
+				android:layout_margin="5dip"
+				android:minWidth="150dip"
+				android:text="@string/login_button_text"
+				android:enabled="false"
+				android:textColor="@android:color/black"
+				android:background="@drawable/btn_grey_selector" />			    
+		    
+			<Button 
+			    android:id="@+id/register_account_button"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content" 
+			    android:layout_margin="5dip"	
+			    android:minWidth="150dip"		    				
+				android:text="@string/register_account_label"
+				android:enabled="false"
+				android:textColor="@android:color/black"
+				android:background="@drawable/btn_grey_selector" />	
+
+			<Button 
+			    android:id="@+id/retrieve_password_button"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content" 
+			    android:layout_margin="5dip"	
+			    android:minWidth="150dip"		    				
+				android:text="@string/retrieve_password_label"
+				android:textColor="@android:color/black"
+				android:background="@drawable/btn_grey_selector" />	
+		</LinearLayout>
+	</LinearLayout>    
+</ScrollView>

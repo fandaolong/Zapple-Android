@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+  <soap12:Body>
+    <submitOrder xmlns="http://rentcar.bbcwx.com/">
+      <userName>$userName</userName>
+      <vehicleId>$vehicleId</vehicleId>
+      <takeVehicleStoreId>$takeVehicleStoreId</takeVehicleStoreId>
+      <takeVehicleDate>$takeVehicleDate</takeVehicleDate>
+      <returnVehicleStoreId>$returnVehicleStoreId</returnVehicleStoreId>
+      <returnVehicleDate>$returnVehicleDate</returnVehicleDate>
+      <childSeat>$childSeat</childSeat>
+      <gpsDevice>$gpsDevice</gpsDevice>
+      <invoice>$invoice</invoice>
+    </submitOrder>
+  </soap12:Body>
+</soap12:Envelope>

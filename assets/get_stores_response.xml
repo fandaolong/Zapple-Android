@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+	<soap12:Body>
+		<getStoresResponse xmlns="http://rentcar.bbcwx.com/">
+			<getStoresResult>string</getStoresResult>
+			<storesCount>long</storesCount>
+			<stores>
+				<store>
+					<name>string</name>
+					<id>long</id>
+					<address>string</address>
+					<longitude>double</longitude>
+	      			<latitude>double</latitude>
+	    			<altitude>doulbe</altitude>
+				</store>
+				<store>
+					<name>string</name>
+					<id>long</id>
+					<address>string</address>
+					<longitude>double</longitude>
+	      			<latitude>double</latitude>
+	    			<altitude>double</altitude>
+				</store>
+			</stores>
+		</getStoresResponse>
+	</soap12:Body>
+</soap12:Envelope>

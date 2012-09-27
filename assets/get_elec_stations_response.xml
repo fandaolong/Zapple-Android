@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+  <soap12:Body>
+    <GetElecStationsResponse xmlns="http://rentcar.bbcwx.com/">
+      <GetElecStationsResult>
+        <result>string</result>
+        <stationsCount>long</stationsCount>
+        <stations>
+          <station>
+            <name>string</name>
+            <address>string</address>
+            <longitude>double</longitude>
+            <latitude>double</latitude>
+          </station>
+          <station>
+            <name>string</name>
+            <address>string</address>
+            <longitude>double</longitude>
+            <latitude>double</latitude>
+          </station>
+        </stations>
+      </GetElecStationsResult>
+    </GetElecStationsResponse>
+  </soap12:Body>
+</soap12:Envelope>

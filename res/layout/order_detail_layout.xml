@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2012 Li Cong, forlong401@163.com
+      
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ --> 
+ 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:background="@color/default_bg_color">
+
+    <TextView
+        android:id="@+id/title_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_medium"
+        android:gravity="center"
+        android:text="@string/order_check_label"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:background="@drawable/title_bg"/>    
+    
+   <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+	    <TextView
+	        android:id="@+id/order_status_text_view"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:text="@string/order_status_label"/>
+	    
+	    <TextView
+	        android:id="@+id/order_status_value_text_view"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@id/order_status_text_view"
+	        android:text="@string/order_status_label" />	    	        
+    </RelativeLayout>    
+        
+	<View
+	    android:layout_width="match_parent"
+	    android:layout_height="1dip"
+	    android:background="@android:color/black"/>   
+   
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/vehicle_info_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/vehicle_info_label" />
+
+        <TextView
+            android:id="@+id/model_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/vehicle_info_text_view"
+            android:text="@string/model_label" />
+
+        <TextView
+            android:id="@+id/brand_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/model_text_view"
+            android:layout_below="@id/vehicle_info_text_view"                       
+            android:text="@string/brand_label" />         
+    </RelativeLayout>
+    
+	<View
+	    android:layout_width="match_parent"
+	    android:layout_height="1dip"
+	    android:background="@android:color/black"/>     
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/take_vehicle_info_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/take_vehicle_info_label" />
+
+        <TextView
+            android:id="@+id/take_store_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/take_vehicle_info_text_view"
+            android:text="@string/store_name_label" />
+
+        <TextView
+            android:id="@+id/take_vehicle_time_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/take_store_name_text_view"
+            android:layout_below="@id/take_vehicle_info_text_view"              
+            android:text="@string/time_label" />        
+    </RelativeLayout>    
+    
+	<View
+	    android:layout_width="match_parent"
+	    android:layout_height="1dip"
+	    android:background="@android:color/black"/>     
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/return_vehicle_info_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/return_vehicle_info_label" />
+
+        <TextView
+            android:id="@+id/return_store_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/return_vehicle_info_text_view"
+            android:text="@string/store_name_label" />
+
+        <TextView
+            android:id="@+id/return_vehicle_time_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/return_store_name_text_view"
+            android:layout_below="@id/return_vehicle_info_text_view" 
+            android:text="@string/time_label" />        
+    </RelativeLayout>       
+    
+	<View
+	    android:layout_width="match_parent"
+	    android:layout_height="1dip"
+	    android:background="@android:color/black"/>     
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/order_fee_label" />
+        
+        <TextView
+            android:id="@+id/vehicle_fee_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vechicle_fee_label" />
+        
+        <TextView
+            android:id="@+id/added_value_fee_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/added_value_fee_label" />
+        
+        <TextView
+            android:id="@+id/other_fee_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/other_fee_label" />
+        
+        <TextView
+            android:id="@+id/order_total_amount_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/order_total_amount_label" />        
+    </LinearLayout>
+    
+	<View
+	    android:layout_width="match_parent"
+	    android:layout_height="1dip"
+	    android:background="@android:color/black"/>     
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+	    <Button
+	        android:id="@+id/cancel_order_button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerVertical="true"
+	        android:layout_margin="5dip"
+	        android:text="@string/cancel_order_label"
+	        android:textColor="@android:color/black"
+	        android:background="@drawable/btn_grey_selector"/>
+	    	    
+	    <Button 
+	        android:id="@+id/continue_order_button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_centerVertical="true"
+	        android:layout_margin="5dip"
+	        android:text="@string/continue_order_label"
+	        android:textColor="@android:color/black"
+	        android:background="@drawable/btn_grey_selector"
+	        android:visibility="invisible"/>	    
+    </RelativeLayout>     
+</LinearLayout>
