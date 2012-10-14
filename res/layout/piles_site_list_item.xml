@@ -13,7 +13,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
  -->
-<com.zapple.rental.ui.PilesSiteListItem 
+<com.zapple.evshare.ui.PilesSiteListItem 
 	xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
@@ -44,4 +44,4 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:src="@drawable/ic_go_next_arrow_normal"/>
-</com.zapple.rental.ui.PilesSiteListItem>
+</com.zapple.evshare.ui.PilesSiteListItem>

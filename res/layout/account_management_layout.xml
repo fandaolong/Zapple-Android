@@ -21,15 +21,6 @@
 	android:orientation="vertical"
 	android:background="@color/default_bg_color">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_medium"
-        android:gravity="center"
-        android:text="@string/account_management_cell_item_name"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:background="@drawable/title_bg"/>    
-    
    <RelativeLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

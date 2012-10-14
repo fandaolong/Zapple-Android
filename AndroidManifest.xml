@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--  Copyright (C) 2012 Li Cong, forlong401@163.com
       
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,14 +14,14 @@
      limitations under the License.
  -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zapple.rental"
+    package="com.zapple.evshare"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="9"
+        android:minSdkVersion="8"
         android:targetSdkVersion="15" />
-
+    
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -28,174 +29,135 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>  
 	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/> 
-	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>    
-    
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>      
+
     <application
-        android:name="ZappleRentalApp"
+        android:name="EvShareApp"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
         <activity
-            android:name="com.zapple.rental.ui.HomePageActivity"
-            android:label="@string/title_activity_home_page"
-            android:configChanges="orientation|keyboardHidden" >
+            android:name=".ui.MainActivity"
+            android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         
         <activity
-            android:name="com.zapple.rental.ui.LoginActivity"
+            android:name=".ui.FragmentTabsMainActivity"
+            android:label="@string/title_activity_main" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>        
+        
+        <activity
+            android:name=".ui.AboutActivity"
+            android:label="@string/title_activity_main" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>        
+        
+        <activity
+            android:name=".ui.ReservationActivity"
+            android:label="@string/title_activity_main" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>        
+        
+        <activity
+            android:name=".ui.MainTabActivity"
+            android:label="@string/reservation_service_title" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>        
+        
+        <activity
+            android:name=".ui.LoginActivity"
             android:label="@string/title_activity_login"
-            android:configChanges="orientation|keyboardHidden"/>
+            android:configChanges="orientation|keyboardHidden"/>        
         
         <activity
-            android:name="com.zapple.rental.ui.RetrievePasswordActivity"
+            android:name=".ui.RetrievePasswordActivity"
             android:label="@string/title_activity_password_retrieval"
+            android:configChanges="orientation|keyboardHidden"/>         
+        
+        <activity
+            android:name=".ui.FavoriteActivity"
             android:configChanges="orientation|keyboardHidden"/>        
         
         <activity
-            android:name="com.zapple.rental.ui.QuickOrderActivity"
-            android:label="@string/title_activity_quick_order"
-            android:configChanges="orientation|keyboardHidden"/>       
+            android:name=".ui.HelpActivity"
+            android:configChanges="orientation|keyboardHidden"/>         
         
         <activity
-            android:name="com.zapple.rental.ui.ReservationVehicleActivity"
-            android:configChanges="orientation|keyboardHidden"/>
-        
+            android:name=".ui.SettingActivity"
+            android:configChanges="orientation|keyboardHidden"/>        
+            
         <activity
-            android:name="com.zapple.rental.ui.QueryStoreActivity"
-            android:configChanges="orientation|keyboardHidden"/>
-        
-        <activity
-            android:name="com.zapple.rental.ui.MemberManagementActivity"
-            android:configChanges="orientation|keyboardHidden"/>
-        
-        <activity
-            android:name="com.zapple.rental.ui.OrderManagementActivity"
-            android:configChanges="orientation|keyboardHidden"/>
-        
-        <activity
-            android:name="com.zapple.rental.ui.AccountManagementActivity"
-            android:configChanges="orientation|keyboardHidden"/>
-        
-        <activity
-            android:name="com.zapple.rental.ui.CustomerServiceActivity"
-            android:configChanges="orientation|keyboardHidden"/>
-        
-        <activity
-            android:name="com.zapple.rental.ui.MessageCenterActivity"
-            android:configChanges="orientation|keyboardHidden"/>
-                
-        <activity
-            android:name="com.zapple.rental.ui.MoreActivity"
-            android:configChanges="orientation|keyboardHidden"/>                    
-        
-        <activity
-            android:name="com.zapple.rental.ui.StoreDetailActivity"
-            android:configChanges="orientation|keyboardHidden"/> 
-                    
-        <activity
-            android:name="com.zapple.rental.ui.QuickOrderTimeActivity"
-            android:label="@string/title_activity_quick_order_time"
-            android:configChanges="orientation|keyboardHidden"/>       
-        
-        <activity
-            android:name="com.zapple.rental.ui.OrderCarActivity"
-            android:label="@string/title_activity_order_car"
-            android:configChanges="orientation|keyboardHidden"/>     
-        
-        <activity
-            android:name="com.zapple.rental.ui.ChooseCarTypeActivity"
-            android:label="@string/title_activity_choose_car_type"
+            android:name=".ui.MyZappleActivity"
             android:configChanges="orientation|keyboardHidden"/>       
             
         <activity
-            android:name="com.zapple.rental.ui.OrderCheckActivity"
-            android:label="@string/title_activity_choose_car_type"
-            android:configChanges="orientation|keyboardHidden"/>         
+            android:name=".ui.ManagementTabActivity"
+            android:configChanges="orientation|keyboardHidden"/>           
         
         <activity
-            android:name="com.zapple.rental.ui.AdvertisementActivity"
+            android:name=".ui.MemberManagementActivity"
             android:configChanges="orientation|keyboardHidden"/>
         
         <activity
-            android:name="com.zapple.rental.ui.OrderChooseServiceActivity"
-            android:configChanges="orientation|keyboardHidden"/>        
-           
-        <activity
-            android:name="com.zapple.rental.ui.StoreListActivity"
-            android:configChanges="orientation|keyboardHidden"/>         
-        
-        <activity
-            android:name="com.zapple.rental.ui.ScoreActivity"
-            android:configChanges="orientation|keyboardHidden"/>         
-        
-        <activity
-            android:name="com.zapple.rental.ui.PersonalInfoActivity"
-            android:configChanges="orientation|keyboardHidden"/> 
-            
-        <activity
-            android:name="com.zapple.rental.ui.ModifyPasswordActivity"
-            android:configChanges="orientation|keyboardHidden"/> 
-            
-        <activity
-            android:name="com.zapple.rental.ui.MemberRegulationActivity"
-            android:configChanges="orientation|keyboardHidden"/> 
-            
-        <activity
-            android:name="com.zapple.rental.ui.ComplaintSuggestionActivity"
-            android:configChanges="orientation|keyboardHidden"/>         
-        
-        <activity
-            android:name="com.zapple.rental.ui.OrderDetailActivity"
-            android:configChanges="orientation|keyboardHidden"/>        
-        
-        <activity
-            android:name="com.zapple.rental.ui.ContinueOrderActivity"
-            android:configChanges="orientation|keyboardHidden"/>         
-
-        <activity
-            android:name="com.zapple.rental.ui.FavoriteActivity"
+            android:name=".ui.OrderManagementActivity"
             android:configChanges="orientation|keyboardHidden"/>
         
         <activity
-            android:name="com.zapple.rental.ui.RentalProcedureActivity"
-            android:configChanges="orientation|keyboardHidden"/>
-        
-        <activity
-            android:name="com.zapple.rental.ui.AboutActivity"
+            android:name=".ui.AccountManagementActivity"
             android:configChanges="orientation|keyboardHidden"/>        
         
         <activity
-            android:name="com.zapple.rental.ui.PowerInfoActivity"
+            android:name=".ui.CustomerServiceActivity"
+            android:configChanges="orientation|keyboardHidden"/>
+        
+        <activity
+            android:name=".ui.MessageCenterActivity"
+            android:configChanges="orientation|keyboardHidden"/>        
+        
+        <activity
+            android:name=".ui.PersonalInfoActivity"
+            android:configChanges="orientation|keyboardHidden"/> 
+            
+        <activity
+            android:name=".ui.MemberRegulationActivity"
+            android:configChanges="orientation|keyboardHidden"/> 
+            
+        <activity
+            android:name=".ui.ComplaintSuggestionActivity"
+            android:configChanges="orientation|keyboardHidden"/>  
+            
+        <activity
+            android:name=".ui.RentalProcedureActivity"
+            android:configChanges="orientation|keyboardHidden"/>
+        
+        <activity
+            android:name=".ui.PowerInfoActivity"
             android:configChanges="orientation|keyboardHidden"/>         
         
         <activity
-            android:name="com.zapple.rental.ui.PilesSiteMapActivity"
+            android:name=".ui.PilesSiteMapActivity"
             android:configChanges="orientation|keyboardHidden"/>          
         
         <activity
-            android:name="com.zapple.rental.ui.PilesSiteListActivity"
-            android:configChanges="orientation|keyboardHidden"/>         
-        
-        <activity
-            android:name="com.zapple.rental.ui.RechargePrePaidCardActivity"
-            android:configChanges="orientation|keyboardHidden"/>        
-        
-        <activity
-            android:name="com.zapple.rental.ui.AlipayRechargeActivity"
-            android:configChanges="orientation|keyboardHidden"/>         
-
-        <activity
-            android:name="com.zapple.rental.ui.DebitCardRechargeActivity"
-            android:configChanges="orientation|keyboardHidden"/>         
-        
-        <activity
-            android:name="com.zapple.rental.ui.CreditCardRechargeActivity"
-            android:configChanges="orientation|keyboardHidden"/>         
+            android:name=".ui.PilesSiteListActivity"
+            android:configChanges="orientation|keyboardHidden"/>           
         
 		<service 
 			android:name=".service.GpsService" >
@@ -205,23 +167,23 @@
 		</service>         
         
 		<provider  
-            android:authorities="com.zapple.rental.provider.vehicle"
+            android:authorities="com.zapple.evshare.provider.vehicle"
             android:name=".provider.VehicleProvider" />   
             
 		<provider  
-            android:authorities="com.zapple.rental.provider.store"
+            android:authorities="com.zapple.evshare.provider.store"
             android:name=".provider.StoreProvider" /> 	
             
 		<provider  
-            android:authorities="com.zapple.rental.provider.score"
+            android:authorities="com.zapple.evshare.provider.score"
             android:name=".provider.ScoreProvider" /> 			
             
 		<provider  
-            android:authorities="com.zapple.rental.provider.order_table"
+            android:authorities="com.zapple.evshare.provider.order_table"
             android:name=".provider.OrderProvider" /> 	
             
 		<provider  
-            android:authorities="com.zapple.rental.provider.piles_site"
-            android:name=".provider.PilesSiteProvider" /> 			
+            android:authorities="com.zapple.evshare.provider.piles_site"
+            android:name=".provider.PilesSiteProvider" />        
     </application>
 </manifest>

@@ -13,15 +13,15 @@
      See the License for the specific language governing permissions and
      limitations under the License.
  -->
-<com.zapple.rental.ui.VehicleListItem 
+<com.zapple.evshare.ui.VehicleListItem 
 	xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="horizontal">
     
     <ImageView 
         android:id="@+id/vehicle_photo_image_view"
-        android:layout_width="wrap_content"
+        android:layout_width="60dip"
         android:layout_height="match_parent"
         android:src="@drawable/ic_default_vehicle"/>
     
@@ -32,60 +32,73 @@
         android:orientation="vertical">
         
         <TextView 
-            android:id="@+id/brand_text_view"
+            android:id="@+id/brand_model_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:singleLine="false"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-        <TextView 
-            android:id="@+id/model_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="false"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#7d7d7d"/>
 
         <TextView 
             android:id="@+id/price_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:singleLine="false"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#a0a0a0"/>
         
         <TextView 
             android:id="@+id/dump_energy_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:singleLine="false"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#a0a0a0"/>
         
-        <TextView 
-            android:id="@+id/parking_garage_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="false"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            
+	        <TextView 
+	            android:id="@+id/parking_garage_text_view"
+	            android:layout_width="0dip"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1.0"
+	            android:singleLine="true"
+	            android:textAppearance="?android:attr/textAppearanceSmall"
+	            android:textColor="#a0a0a0"/>              
+            
+	        <TextView 
+	            android:id="@+id/favorite_text_view"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginRight="3dip"
+	            android:text="@string/favorite_label"
+	            android:layout_gravity="right"
+	            android:gravity="right"
+	            android:singleLine="true"
+	            android:textAppearance="?android:attr/textAppearanceSmall"
+	            android:textColor="#0075a9"/>
+	            
+	        <View 
+	            android:layout_width="1dip"
+	            android:layout_height="10dip"
+	            android:background="#0075a9"
+	            android:layout_gravity="center_vertical"/>
+				            
+	        <TextView 
+	            android:id="@+id/reservation_text_view"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="3dip"
+	            android:text="@string/reservation_label"
+	            android:layout_gravity="right"
+	            android:layout_marginRight="6dip"
+	            android:gravity="right"
+	            android:singleLine="true"
+	            android:textAppearance="?android:attr/textAppearanceSmall"
+	            android:textColor="#0075a9"/>	            	        
+        </LinearLayout>
     </LinearLayout>
-    
-    <LinearLayout 
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"        
-        android:orientation="vertical">
-        
-        <Button
-            android:id="@+id/favorite_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/favorite_label"
-            android:textColor="@android:color/black"
-            android:background="@drawable/btn_grey_selector"/>
-        
-        <Button
-            android:id="@+id/reservation_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/reservation_label"
-            android:textColor="@android:color/black"
-            android:background="@drawable/btn_grey_selector"/>        
-    </LinearLayout>
-</com.zapple.rental.ui.VehicleListItem>
+</com.zapple.evshare.ui.VehicleListItem>

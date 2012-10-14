@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Copyright (C) 2012 Li Cong, forlong401@163.com
+      
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+ --> 
+
+<ScrollView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">    
+    
+	<LinearLayout     
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical">
+	    
+	    <TableLayout 
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_margin="30dip"
+	        android:stretchColumns="1">
+	        
+	        <TableRow>
+		        <TextView 
+		            android:layout_width="wrap_content"
+		            android:layout_height="match_parent"
+		            android:layout_margin="10dip"
+		            android:gravity="center_vertical"
+		            android:singleLine="true"
+		            android:text="@string/city_label"
+		            android:textColor="#a9a9aa"
+		            android:textAppearance="?android:attr/textAppearanceMedium"/>
+		        
+		        <TextView 
+		            android:id="@+id/city_text_view"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:singleLine="true"
+		            android:drawableStart="@drawable/my_location_selector"
+		            android:background="@drawable/rightangle_border_selector"
+		            android:text="@string/my_location_label"
+		            android:gravity="center_vertical"
+		            android:drawablePadding="8dip"
+		            android:padding="8dip"/>
+			</TableRow>       
+			
+	        <TableRow
+	            android:layout_marginTop="30dip">
+		        <TextView 
+		            android:layout_width="wrap_content"
+		            android:layout_height="match_parent"
+		            android:layout_margin="10dip"
+		            android:gravity="center_vertical"
+		            android:singleLine="true"
+		            android:text="@string/store_label"
+		            android:textColor="#a9a9aa"
+		            android:textAppearance="?android:attr/textAppearanceMedium"/>
+		        
+		        <TextView 
+		            android:id="@+id/store_text_view"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:singleLine="true"
+		            android:drawableStart="@drawable/ic_car_selector"
+		            android:background="@drawable/rightangle_border_selector"
+		            android:text="@string/choose_city_label"
+		            android:gravity="center_vertical"
+		            android:drawablePadding="8dip"
+		            android:padding="8dip"/>					
+			</TableRow>   
+			
+	        <TableRow
+	            android:layout_marginTop="30dip">
+		        <TextView 
+		            android:layout_width="wrap_content"
+		            android:layout_height="match_parent"
+		            android:layout_margin="10dip"
+		            android:gravity="center_vertical"
+		            android:singleLine="true"
+		            android:text="@string/date_label"
+		            android:textColor="#a9a9aa"
+		            android:textAppearance="?android:attr/textAppearanceMedium"/>
+		        
+		        <TextView 
+		            android:id="@+id/date_text_view"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:singleLine="true"
+		            android:drawableStart="@drawable/ic_calendar_selector"
+		            android:background="@drawable/rightangle_border_selector"
+		            android:text="@string/date_label"
+		            android:gravity="center_vertical"
+		            android:drawablePadding="8dip"
+		            android:padding="8dip"/>
+			</TableRow>       
+			
+	        <TableRow
+	            android:layout_marginTop="30dip">
+		        <TextView 
+		            android:layout_width="wrap_content"
+		            android:layout_height="match_parent"
+		            android:layout_margin="10dip"
+		            android:gravity="center_vertical"
+		            android:singleLine="true"
+		            android:text="@string/time_label"
+		            android:textColor="#a9a9aa"
+		            android:textAppearance="?android:attr/textAppearanceMedium"/>
+		        
+		        <TextView 
+		            android:id="@+id/time_text_view"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:singleLine="true"
+		            android:drawableStart="@drawable/ic_clock_selector"
+		            android:background="@drawable/rightangle_border_selector"
+		            android:text="@string/time_label"
+		            android:gravity="center_vertical"
+		            android:drawablePadding="8dip"
+		            android:padding="8dip"/>
+			</TableRow>         
+	    </TableLayout>   
+	    
+	    <Button 
+	        android:id="@+id/next_button"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:layout_margin="5dip"
+	        android:layout_marginTop="30dip"
+	        android:text="@string/next_label"
+	        android:enabled="false"
+	        android:textColor="@android:color/white"
+	        android:background="@drawable/btn_title_bg_selector"
+	        android:textAppearance="?android:attr/textAppearanceSmall"/>    
+	</LinearLayout>
+</ScrollView>

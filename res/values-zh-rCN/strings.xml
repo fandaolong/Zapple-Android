@@ -66,8 +66,8 @@
 	
 	<string name="back_label">"返回"</string>
 	<string name="empty_prompt">"空"</string>
-	<string name="favorite_label">"收藏"</string>
-	<string name="reservation_label">"预定"</string>
+	<string name="favorite_label">"收    藏"</string>
+	<string name="reservation_label">"预    订"</string>
 	
 	<string name="reservation_date_label">"预定时间"</string>
 	<string name="take_vehicle_date_label">"取车日期"</string>
@@ -189,6 +189,7 @@
 	<string name="get_store_success_label">"成功获取网点"</string>
 	<string name="get_store_failure_label">"获取网点失败"</string>
 	
+	<string name="vehicle_brand_model_label">"品牌（车型）："</string>
 	<string name="vehicle_brand_label">"品牌："</string>
 	<string name="vehicle_model_label">"车型："</string>
 	<string name="vehicle_price_label">"价格："</string>
@@ -237,5 +238,22 @@
 	<string name="get_station_failure_label">"查询充电桩失败，一会再试"</string>
 	<string name="get_station_success_label">"查询充电桩成功"</string>	
 	<string name="get_station_label">"查询充电桩"</string>
-	<string name="get_station_prompt">"正在查询充电桩"</string>					
+	<string name="get_station_prompt">"正在查询充电桩"</string>		
+	
+	<string name="my_zapple_label">"我的ZAPPLE"</string>
+	<string name="help_label">"帮    助"</string>
+	<string name="my_location_label">"我的位置"</string>
+	<string name="choose_city_label">"选择服务点"</string>
+	
+	<string name="filter_label">"筛    选"</string>			
+	
+	<string name="action_bar_search">"搜    索"</string>
+	<string name="action_bar_login">"登    录"</string>
+	<string name="action_bar_favorite">"收藏夹"</string>
+	<string name="action_bar_help">"帮    助"</string>
+	<string name="action_bar_setting">"设    置"</string>
+	<string name="action_bar_about">"关    于"</string>
+	
+	<string name="reservation_service_title">"ZAPPLE分时共享"</string>
+	<string name="store_detail_title">"服务网点"</string>
 </resources>

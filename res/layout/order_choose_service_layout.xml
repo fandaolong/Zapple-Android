@@ -20,15 +20,6 @@
     android:layout_height="match_parent"
 	android:orientation="vertical"
 	android:background="@color/default_bg_color">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_medium"
-        android:gravity="center"
-        android:text="@string/order_choose_service_label"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:background="@drawable/title_bg"/>    
     
     <RelativeLayout 
         android:layout_width="match_parent"
