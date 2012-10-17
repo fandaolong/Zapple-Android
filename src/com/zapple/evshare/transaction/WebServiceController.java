@@ -40,6 +40,7 @@ import com.zapple.evshare.data.Order;
 import com.zapple.evshare.data.OrderDetail;
 import com.zapple.evshare.data.PersonalInfo;
 import com.zapple.evshare.data.QueryFavoriteResult;
+import com.zapple.evshare.data.QueryOrderResult;
 import com.zapple.evshare.data.Score;
 import com.zapple.evshare.data.Station;
 import com.zapple.evshare.data.Store;
@@ -673,7 +674,7 @@ public class WebServiceController {
         return result;  
     }	
 	
-	public static List<Order> queryOrders(String userName, String password, String startIndex, String endIndex) throws Exception {  		  
+	public static QueryOrderResult queryOrders(String userName, String password, String startIndex, String endIndex) throws Exception {  		  
         InputStream inStream = WebServiceController.class.getResourceAsStream("/assets/query_orders.xml");  
         byte[] data = readInputStream(inStream);  
         String xml = new String(data);  
@@ -691,7 +692,7 @@ public class WebServiceController {
         HttpURLConnection conn = httpPostMethod(data); 
     	int responseCode = conn.getResponseCode();
     	Log.d(TAG, "queryOrders->responseCode->" + responseCode);
-    	List<Order> result = null;
+    	QueryOrderResult result = null;
         if (responseCode == HttpURLConnection.HTTP_OK) {  
             InputStream responseStream = conn.getInputStream();  
 		    //Get the cookie  
@@ -1486,17 +1487,17 @@ public class WebServiceController {
      * @return  
      * @throws Exception  
      */  
-    private static List<Order> parseQueryOrdersXML(InputStream responseStream) throws Exception {  
+    private static QueryOrderResult parseQueryOrdersXML(InputStream responseStream) throws Exception {  
         XmlPullParser parser = Xml.newPullParser();  
         parser.setInput(responseStream, "UTF-8");  
         int event = parser.getEventType();  
-        List<Order> orders = null;
+        QueryOrderResult result = new QueryOrderResult();
         Order order = null;
 
         while (event != XmlPullParser.END_DOCUMENT) {  
             switch (event) {  
 	            case XmlPullParser.START_DOCUMENT: {
-	            	orders = new ArrayList<Order>(); 
+	            	result.mOrderList = new ArrayList<Order>(); 
 	            	break;
 	            }            
 	            case XmlPullParser.START_TAG: {  
@@ -1530,21 +1531,21 @@ public class WebServiceController {
 	                } else if ("otherFee".equals(name)) {  
 	                	order.mOtherFee = parser.nextText();	   	                	
 	                } else if ("result".equals(name)) {
-	                	
+	                	result.mResult = parser.nextText();
 	                }
 	                break;  
 	            }  
 		        case XmlPullParser.END_TAG: {
 		        	if ("order".equals(parser.getName())) {
-		        		orders.add(order);
+		        		result.mOrderList.add(order);
 		        		order = null;
 		        	}
 		        	break;
 		        }
 		    	case XmlPullParser.END_DOCUMENT: {
-		    		if (orders != null && orders.size() > 0) {
+		    		if (result.mOrderList != null && result.mOrderList.size() > 0) {
 		    			if (DEBUG) {
-		    				Log.d(TAG, "parseGetVehiclesXML->orders:" + orders.toArray().toString());
+		    				Log.d(TAG, "parseGetVehiclesXML->orders:" + result.mOrderList.toArray().toString());
 		    			}	        			
 		    		}	        		
 		    		break;
@@ -1552,7 +1553,7 @@ public class WebServiceController {
             }
             event = parser.next();
         }  
-        return orders;           
+        return result;           
     }       
     
     /**  

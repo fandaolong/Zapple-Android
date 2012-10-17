@@ -191,7 +191,7 @@ public class MainTabActivity extends TabActivity implements
 	    		break;
 	    	}	    	
     	}
-        Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
         return true;
     }    
     

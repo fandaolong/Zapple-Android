@@ -22,6 +22,7 @@ import com.zapple.evshare.R;
 import com.zapple.evshare.data.LoginResult;
 import com.zapple.evshare.data.Order;
 import com.zapple.evshare.data.Order.OrderTable;
+import com.zapple.evshare.data.QueryOrderResult;
 import com.zapple.evshare.transaction.WebServiceController;
 
 import android.app.Activity;
@@ -97,10 +98,9 @@ public class OrderManagementActivity extends Activity {
                 }
                 case QUERY_FAILURE: {
                 	String failureReason;
-                	if (msg.obj == null) {
-                		failureReason = getString(R.string.query_order_failure_label);
-                	} else {
-                		failureReason = (String) msg.obj;
+                	failureReason = getString(R.string.query_order_failure_label);
+                	if (msg.obj != null) {
+                		failureReason = failureReason + "--" + (String) msg.obj;
                 	}
                     Toast.makeText(mContext, failureReason, 
                     		Toast.LENGTH_SHORT).show();
@@ -318,8 +318,9 @@ public class OrderManagementActivity extends Activity {
 	        String password = sharedPreferences.getString(LoginResult.LOGIN_RESULT_PASSWORD_KEY, "");
 			String startIndex = "0";
 			String endIndex = "100";
+			QueryOrderResult result = null;
 			try {
-				mOrderList = WebServiceController.queryOrders(account, password, startIndex, endIndex);
+				result = WebServiceController.queryOrders(account, password, startIndex, endIndex);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -329,11 +330,12 @@ public class OrderManagementActivity extends Activity {
 			
 			// Deal with upload result
 			Message msg = new Message();
-			if (mOrderList != null) {
+			if (result != null && result.mOrderList != null && TextUtils.isEmpty(result.mResult)) {
 				if (DEBUG) Log.d(TAG, "QueryOrderRunner->queryOrder success");
         		msg.what = QUERY_SUCCESS;
 			} else {
 				msg.what = QUERY_FAILURE;
+				msg.obj = result != null ? result.mResult : "";
 				if (DEBUG) Log.d(TAG, "QueryOrderRunner->queryOrder failure.");
 			}
 			if (mQueryOrderDialog != null && mQueryOrderDialog.isShowing()) {
