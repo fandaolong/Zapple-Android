@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  Copyright (C) 2012 Li Cong, forlong401@163.com
+<!--
+      Copyright (C) 2012 Li Cong, forlong401@163.com
       
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -12,121 +13,158 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
- -->          
-<RelativeLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-	android:layout_height="match_parent" 
-	android:background="@color/default_bg_color">	    
-    
-    <TableLayout 
+    android:layout_height="match_parent"
+    android:background="@color/default_bg_color"
+    tools:context=".ui.HelpActivity" >
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_margin="5dip">
-        
-        <TableRow>
-		    <Button
-		        android:id="@+id/personal_info_button"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_margin="5dip"
-		        android:maxWidth="150dp"
-		        android:singleLine="true"
-		        android:ellipsize="end"
-		        android:text="@string/personal_info_label"
-		        android:textColor="@android:color/black"
-		        android:background="@drawable/btn_grey_selector"/>
-	    	        
-		    <Button
-		        android:id="@+id/member_regulation_button"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_margin="5dip"
-		        android:maxWidth="150dp"
-		        android:singleLine="true"
-		        android:ellipsize="end"		        
-		        android:text="@string/member_regulation_label"
-		        android:textColor="@android:color/black"
-		        android:background="@drawable/btn_grey_selector"/>
-		</TableRow>       
-		
-        <TableRow>
-		    <Button
-		        android:id="@+id/customer_service_button"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_margin="5dip"
-		        android:maxWidth="150dp"
-		        android:singleLine="true"
-		        android:ellipsize="end"		        
-		        android:text="@string/customer_service_cell_item_name"
-		        android:textColor="@android:color/black"
-		        android:background="@drawable/btn_grey_selector"/>
-	    	        
-		    <Button
-		        android:id="@+id/complaint_suggestion_button"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_margin="5dip"
-		        android:maxWidth="150dp"
-		        android:singleLine="true"
-		        android:ellipsize="end"		        
-		        android:text="@string/complaint_suggestion_label"
-		        android:textColor="@android:color/black"
-		        android:background="@drawable/btn_grey_selector"/>
-		</TableRow> 
-		
-        <TableRow>
-		    <Button
-		        android:id="@+id/message_center_button"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_margin="5dip"
-		        android:maxWidth="150dp"
-		        android:singleLine="true"
-		        android:ellipsize="end"		        
-		        android:text="@string/message_center_cell_item_name"
-		        android:textColor="@android:color/black"
-		        android:background="@drawable/btn_grey_selector"/>
-	    	        
-		    <Button
-		        android:id="@+id/power_info_button"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:maxWidth="150dp"
-		        android:layout_margin="5dip"
-		        android:singleLine="true"
-		        android:ellipsize="end"		        
-		        android:text="@string/power_info_label"
-		        android:textColor="@android:color/black"
-		        android:background="@drawable/btn_grey_selector"/>
-		</TableRow> 
-		
-        <TableRow>
-		    <Button
-		        android:id="@+id/nearby_piles_button"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_margin="5dip"
-		        android:maxWidth="150dp"
-		        android:singleLine="true"
-		        android:ellipsize="end"		        
-		        android:text="@string/nearby_piles_label"
-		        android:textColor="@android:color/black"
-		        android:background="@drawable/btn_grey_selector"/>
-	    	       
-		    <Button
-		        android:id="@+id/rental_procedure_button"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_margin="5dip"
-		        android:maxWidth="150dp"
-		        android:singleLine="true"
-		        android:ellipsize="end"		        
-		        android:text="@string/rental_procedure_item_label"
-		        android:textColor="@android:color/black"
-		        android:background="@drawable/btn_grey_selector"/>
-		</TableRow>         
-    </TableLayout>
-</RelativeLayout>	
+        android:layout_centerInParent="true" >
+
+        <LinearLayout
+            android:id="@+id/first_line_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/personal_info_button"
+                android:layout_width="@dimen/app_two_item_width"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/btn_title_bg_selector"
+                android:ellipsize="end"
+                android:maxWidth="150dp"
+                android:singleLine="true"
+                android:text="@string/personal_info_label"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/member_regulation_button"
+                android:layout_width="@dimen/app_two_item_width"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/btn_title_bg_selector"
+                android:ellipsize="end"
+                android:maxWidth="150dp"
+                android:singleLine="true"
+                android:text="@string/member_regulation_label"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/second_line_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/first_line_bar"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/customer_service_button"
+                android:layout_width="@dimen/app_two_item_width"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/btn_title_bg_selector"
+                android:ellipsize="end"
+                android:maxWidth="150dp"
+                android:singleLine="true"
+                android:text="@string/customer_service_cell_item_name"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/complaint_suggestion_button"
+                android:layout_width="@dimen/app_two_item_width"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/btn_title_bg_selector"
+                android:ellipsize="end"
+                android:maxWidth="150dp"
+                android:singleLine="true"
+                android:text="@string/complaint_suggestion_label"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/third_line_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/second_line_bar"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/message_center_button"
+                android:layout_width="@dimen/app_two_item_width"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/btn_title_bg_selector"
+                android:ellipsize="end"
+                android:maxWidth="150dp"
+                android:singleLine="true"
+                android:text="@string/message_center_cell_item_name"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/power_info_button"
+                android:layout_width="@dimen/app_two_item_width"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/btn_title_bg_selector"
+                android:ellipsize="end"
+                android:maxWidth="150dp"
+                android:singleLine="true"
+                android:text="@string/power_info_label"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fourth_line_bar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/third_line_bar"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/nearby_piles_button"
+                android:layout_width="@dimen/app_two_item_width"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/btn_title_bg_selector"
+                android:ellipsize="end"
+                android:maxWidth="150dp"
+                android:singleLine="true"
+                android:text="@string/nearby_piles_label"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/rental_procedure_button"
+                android:layout_width="@dimen/app_two_item_width"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/btn_title_bg_selector"
+                android:ellipsize="end"
+                android:maxWidth="150dp"
+                android:singleLine="true"
+                android:text="@string/rental_procedure_item_label"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

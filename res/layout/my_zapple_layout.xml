@@ -28,29 +28,29 @@
 		
 	    <Button
 	        android:id="@+id/order_management_button"
-	        android:layout_width="wrap_content"
+	        android:layout_width="@dimen/app_one_item_width"
 	        android:layout_height="wrap_content"
-	        android:layout_margin="5dip"
+	        android:layout_margin="15dip"
 	        android:text="@string/order_management_cell_item_name"
-	        android:textColor="@android:color/black"
-	        android:background="@drawable/btn_grey_selector"/>
+	        android:textColor="@android:color/white"
+	        android:background="@drawable/btn_title_bg_selector"/>
 	    	    
 	    <Button 
 	        android:id="@+id/account_management_button"
-	        android:layout_width="wrap_content"
+	        android:layout_width="@dimen/app_one_item_width"
 	        android:layout_height="wrap_content"
-	        android:layout_margin="5dip"
+	        android:layout_margin="15dip"
 	        android:text="@string/account_management_cell_item_name"
-	        android:textColor="@android:color/black"
-	        android:background="@drawable/btn_grey_selector"/>
+	        android:textColor="@android:color/white"
+	        android:background="@drawable/btn_title_bg_selector"/>
 	    
 	    <Button 
 	        android:id="@+id/member_management_button"
-	        android:layout_width="wrap_content"
+	        android:layout_width="@dimen/app_one_item_width"
 	        android:layout_height="wrap_content"
-	        android:layout_margin="5dip"
+	        android:layout_margin="15dip"
 	        android:text="@string/member_management_cell_item_name"
-	        android:textColor="@android:color/black"
-	        android:background="@drawable/btn_grey_selector"/>	    						
+	        android:textColor="@android:color/white"
+	        android:background="@drawable/btn_title_bg_selector"/>	    						
 	</LinearLayout>		
 </RelativeLayout>	

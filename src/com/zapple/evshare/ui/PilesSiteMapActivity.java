@@ -173,7 +173,7 @@ public class PilesSiteMapActivity extends MapActivity {
 		setContentView(R.layout.piles_site_layout);
 				
 		mContext = this;
-		EvShareApp app = (EvShareApp)this.getApplication();
+		EvShareApp app = EvShareApp.getApplication();
 		app.getBMapManager().start();
         // 如果使用地图SDK，请初始化地图Activity
         super.initMapActivity(app.getBMapManager());

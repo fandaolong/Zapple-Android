@@ -33,7 +33,7 @@ import android.widget.Toast;
  * and deal other common case.
  */
 public class EvShareApp extends Application {
-	private static final String TAG = "ZappleRentalApp";
+	private static final String TAG = EvShareApp.class.getSimpleName();
 	private static final boolean DEBUG = true;
 
 	private static boolean sIsLogined = false;
@@ -60,10 +60,10 @@ public class EvShareApp extends Application {
 		sBMapManager = new BMapManager(this);
 		sBMapManager.init(this.mStrKey, new MyGeneralListener());
 		sBMapManager.getLocationManager().setNotifyInternal(10, 5);
-		if (sBMapManager != null) {
-			sBMapManager.destroy();
-			sBMapManager = null;
-		}    			
+//		if (sBMapManager != null) {
+//			sBMapManager.destroy();
+//			sBMapManager = null;
+//		}    			
     }
     
     @Override

@@ -17,4 +17,8 @@
     <color name="location_bg_color">#2081C1</color>
     <color name="default_bg_color">#f8f6f7</color>
     <color name="divider_color">#000000</color>
+    
+    <color name="brand_model_text_color">#ff7d7d7d</color>
+    <color name="vehicle_list_item_small_text_color">#ffa0a0a0</color>
+    <color name="vehicle_favorite_text_color">#ff0075a9</color>
 </resources>

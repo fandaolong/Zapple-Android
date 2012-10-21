@@ -98,7 +98,7 @@ public class MainTabActivity extends TabActivity implements
         
         final Intent intent = getIntent();
 
-        setContentView(R.layout.message_tab_activity);
+        setContentView(R.layout.main_tab_activity);
 
         mContext = this;
         mLoactionTextView = (TextView) findViewById(R.id.location_text_view);

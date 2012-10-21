@@ -98,7 +98,7 @@ public class ManagementTabActivity extends TabActivity implements
         
         final Intent intent = getIntent();
 
-        setContentView(R.layout.message_tab_activity);
+        setContentView(R.layout.main_tab_activity);
 
         mContext = this;
         mLoactionTextView = (TextView) findViewById(R.id.location_text_view);
@@ -190,7 +190,7 @@ public class ManagementTabActivity extends TabActivity implements
 	    		break;
 	    	}	    	
     	}
-        Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
         return true;
     }    
     
