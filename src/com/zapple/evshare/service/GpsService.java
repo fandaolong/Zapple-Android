@@ -36,7 +36,7 @@ import android.os.Process;
 import android.util.Log;
 
 public class GpsService extends Service {
-	private final static String TAG = "GpsService";
+	private final static String TAG = GpsService.class.getSimpleName();
 	public static final String GPX_SERVICE = "com.zapple.rental.GPXService.SERVICE";
 	public static final String EXTRA_UPDATE_RATE = "update-rate";
 	public static final String EXTRA_GPS_ACCURACY = "gps_accuracy";
