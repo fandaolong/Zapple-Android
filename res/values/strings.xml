@@ -253,5 +253,12 @@
 	<string name="action_bar_about">About</string>
 	
 	<string name="reservation_service_title">ZAPPLE EV</string>
-	<string name="store_detail_title">Service Store</string>							
+	<string name="store_detail_title">Service Store</string>	
+	
+	<string name="account_settings_action">Account settings</string>
+	<string name="account_settings_summary">Sync frequency, notifications, etc.</string>
+	<string name="account_setup_login">Login</string>
+	<string name="account_setup_register">Register</string>		
+	<string name="account_setup_prompt">You want to login exist account or create a new account</string>
+	<string name="account_setup_title">Login ZAPPLE　Account</string>					
 </resources>

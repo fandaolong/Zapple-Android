@@ -39,6 +39,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     public SyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
+        Log.v(TAG, "SyncAdapter.autoInitialize." + autoInitialize);
         mContext = context.getApplicationContext();
         mAccountManager = AccountManager.get(mContext);
     }
@@ -49,7 +50,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority,
             ContentProviderClient provider, SyncResult syncResult) {
-        Log.v(TAG, "TestSyncAdapter.onPerformSync() account=" + account);
+        Log.v(TAG, "onPerformSync() account=" + account);
 
         // First, claim all local-only contacts, if any.
         ContentResolver cr = mContext.getContentResolver();

@@ -12,20 +12,19 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
- --> 
- 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:background="@color/default_bg_color">
+ -->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:padding="@dimen/padding_medium"
-        android:text="@string/hello_world"
-        tools:context=".CarInfoListActivity" />
-</RelativeLayout>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory />
+
+    <PreferenceScreen
+        android:key="account_settings"
+        android:title="@string/account_settings_action"
+        android:summary="@string/account_settings_summary">
+        <intent
+            android:action="com.zapple.evshare.ui.ACCOUNT_MANAGER_ENTRY"
+            />
+    </PreferenceScreen>
+
+</PreferenceScreen>

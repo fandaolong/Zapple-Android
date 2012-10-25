@@ -167,7 +167,19 @@
         
         <activity
             android:name=".ui.PilesSiteListActivity"
-            android:configChanges="orientation|keyboardHidden"/>           
+            android:configChanges="orientation|keyboardHidden"/>       
+            
+        <activity
+            android:name=".ui.AccountSetupActivity"
+            android:configChanges="orientation|keyboardHidden"/>  
+            
+        <activity
+            android:name=".ui.AccountSettingsActivity">
+            <intent-filter>
+                <action android:name="com.zapple.evshare.ui.ACCOUNT_MANAGER_ENTRY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>        
         
 		<service 
 			android:name=".service.GpsService" >
