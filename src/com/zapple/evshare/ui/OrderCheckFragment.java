@@ -439,6 +439,7 @@ public class OrderCheckFragment extends Fragment implements OnClickListener {
         		msg.what = SUBMIT_ORDER_SUCCESS;
 			} else {
 				msg.what = SUBMIT_ORDER_FAILURE;
+				msg.obj = submitOrderResult;
 				if (DEBUG) Log.d(TAG, "SubmitOrderRunner->submitOrder failure.");
 			}
 			if (mSubmitOrderDialog != null && mSubmitOrderDialog.isShowing()) {

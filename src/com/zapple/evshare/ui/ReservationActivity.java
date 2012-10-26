@@ -19,6 +19,7 @@ package com.zapple.evshare.ui;
 import com.zapple.evshare.R;
 import com.zapple.evshare.data.NewFragmentInfo;
 import com.zapple.evshare.ui.OrderChooseTimeFragment.Callback;
+import com.zapple.evshare.util.Constants;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -59,12 +60,35 @@ public class ReservationActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_reservation);
 		
 		// find view section
-		mReservationFragment = new ReservationServiceFragment();
+		NewFragmentInfo info = new NewFragmentInfo();
+		info.mTabIndex = Constants.TAB_INDEX_RESERVATION;
+		info.mName = ReservationServiceFragment.class.getSimpleName();
+		info.mArgs = null;
+		mReservationFragment = ReservationServiceFragment.newInstance(info);
 		mReservationFragment.setCallback(this);
 		
 		FragmentTransaction t = getSupportFragmentManager().beginTransaction();
 		t.replace(R.id.content, mReservationFragment);
 		t.commit();
+	}
+	
+	@Override
+	public void onBackPressed() {
+		
+//	    mReservationFragment = null;
+//	    mStoreDetailFragment = null;
+//	    mOrderChooseServiceFragment = null;
+//	    mOrderChooseTimeFragment = null;
+//	    mOrderCheckFragment = null;
+		if (mStoreDetailFragment != null) {
+			NewFragmentInfo info = new NewFragmentInfo();
+			info.mTabIndex = Constants.TAB_INDEX_RESERVATION;
+			info.mName = ReservationServiceFragment.class.getSimpleName();
+			info.mArgs = null;
+			onStoreDetailBackClicked(info);
+			return;
+		}
+		super.onBackPressed();
 	}
 
     /**
@@ -176,6 +200,10 @@ public class ReservationActivity extends FragmentActivity implements
 		mStoreDetailFragment.setCallback(this);
 		t.replace(R.id.content, mStoreDetailFragment);
 		t.commit();
+	    mReservationFragment = null;
+	    mOrderChooseServiceFragment = null;
+	    mOrderChooseTimeFragment = null;
+	    mOrderCheckFragment = null;
 	}
 
 	@Override
@@ -185,7 +213,24 @@ public class ReservationActivity extends FragmentActivity implements
 		mOrderChooseServiceFragment.setCallback(this);
 		t.replace(R.id.content, mOrderChooseServiceFragment);
 		t.commit();
+	    mReservationFragment = null;
+	    mStoreDetailFragment = null;
+	    mOrderChooseTimeFragment = null;
+	    mOrderCheckFragment = null;
 	}
+	
+	@Override
+	public void onStoreDetailBackClicked(NewFragmentInfo info) {
+		FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+		mReservationFragment = ReservationServiceFragment.newInstance(info);
+		mReservationFragment.setCallback(this);
+		t.replace(R.id.content, mReservationFragment);
+		t.commit();		
+	    mStoreDetailFragment = null;
+	    mOrderChooseServiceFragment = null;
+	    mOrderChooseTimeFragment = null;
+	    mOrderCheckFragment = null;
+	}	
 
 	@Override
 	public void onChooseServicePreviousClicked(NewFragmentInfo info) {
@@ -194,6 +239,10 @@ public class ReservationActivity extends FragmentActivity implements
 		mStoreDetailFragment.setCallback(this);
 		t.replace(R.id.content, mStoreDetailFragment);
 		t.commit();
+	    mReservationFragment = null;
+	    mOrderChooseServiceFragment = null;
+	    mOrderChooseTimeFragment = null;
+	    mOrderCheckFragment = null;
 	}
 
 	@Override
@@ -203,6 +252,10 @@ public class ReservationActivity extends FragmentActivity implements
 		mOrderChooseTimeFragment.setCallback(this);
 		t.replace(R.id.content, mOrderChooseTimeFragment);
 		t.commit();		
+	    mReservationFragment = null;
+	    mStoreDetailFragment = null;
+	    mOrderChooseServiceFragment = null;
+	    mOrderCheckFragment = null;
 	}
 
 	@Override
@@ -212,6 +265,10 @@ public class ReservationActivity extends FragmentActivity implements
 		mOrderChooseServiceFragment.setCallback(this);
 		t.replace(R.id.content, mOrderChooseServiceFragment);
 		t.commit();
+	    mReservationFragment = null;
+	    mStoreDetailFragment = null;
+	    mOrderChooseTimeFragment = null;
+	    mOrderCheckFragment = null;
 	}
 
 	@Override
@@ -221,6 +278,10 @@ public class ReservationActivity extends FragmentActivity implements
 		mOrderCheckFragment.setCallback(this);
 		t.replace(R.id.content, mOrderCheckFragment);
 		t.commit();
+	    mReservationFragment = null;
+	    mStoreDetailFragment = null;
+	    mOrderChooseServiceFragment = null;
+	    mOrderChooseTimeFragment = null;
 	}
 
 	@Override
@@ -229,7 +290,11 @@ public class ReservationActivity extends FragmentActivity implements
 		mOrderChooseTimeFragment = OrderChooseTimeFragment.newInstance(info);
 		mOrderChooseTimeFragment.setCallback(this);
 		t.replace(R.id.content, mOrderChooseTimeFragment);
-		t.commit();			
+		t.commit();		
+	    mReservationFragment = null;
+	    mStoreDetailFragment = null;
+	    mOrderChooseServiceFragment = null;
+	    mOrderCheckFragment = null;
 	}
 
 	@Override
@@ -237,7 +302,7 @@ public class ReservationActivity extends FragmentActivity implements
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 	// private method do action section
 	
 	// private method section

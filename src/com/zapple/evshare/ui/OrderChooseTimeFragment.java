@@ -16,6 +16,7 @@
 
 package com.zapple.evshare.ui;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import com.zapple.evshare.R;
@@ -80,7 +81,15 @@ public class OrderChooseTimeFragment extends Fragment implements OnClickListener
                     mTakeYear = year;
                     mTakeMonth = monthOfYear + 1;
                     mTakeDay = dayOfMonth;
-                    mTakeVehicleDateButton.setText(mTakeYear + "-" + mTakeMonth + "-" + mTakeDay);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    final Calendar c = Calendar.getInstance();
+                    c.set(mTakeYear, monthOfYear, mTakeDay);
+//                    Date date = new Date();
+//                    date.setYear(year);
+//                    date.setDate(dayOfMonth);
+//                    date.setMonth(monthOfYear);
+                    String date1 = sdf.format(c.getTime());                    
+                    mTakeVehicleDateButton.setText(date1);
                 }
             };
 
@@ -90,7 +99,14 @@ public class OrderChooseTimeFragment extends Fragment implements OnClickListener
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     mTakeHour = hourOfDay;
                     mTakeMinute = minute;
-                    mTakeVehicleTimeButton.setText(mTakeHour + ":" + mTakeMinute);
+                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                    final Calendar c = Calendar.getInstance();
+                    c.set(mTakeYear, mTakeMonth - 1, mTakeDay, mTakeHour, mTakeMinute, 0);
+//                    Date date = new Date();
+//                    date.setHours(hourOfDay);
+//                    date.setMinutes(minute);
+                    String time = sdf.format(c.getTime());                     
+                    mTakeVehicleTimeButton.setText(time);
                 }
             };	
 	
@@ -102,7 +118,15 @@ public class OrderChooseTimeFragment extends Fragment implements OnClickListener
                     mReturnYear = year;
                     mReturnMonth = monthOfYear + 1;
                     mReturnDay = dayOfMonth;
-                    mReturnVehicleDateButton.setText(mReturnYear + "-" + mReturnMonth + "-" + mReturnDay);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    final Calendar c = Calendar.getInstance();
+                    c.set(mReturnYear, monthOfYear, mReturnDay);
+//                    Date date = new Date();
+//                    date.setYear(year);
+//                    date.setDate(dayOfMonth);
+//                    date.setMonth(monthOfYear);
+                    String date1 = sdf.format(c.getTime());                    
+                    mReturnVehicleDateButton.setText(date1);
                 }
             };
 
@@ -112,7 +136,14 @@ public class OrderChooseTimeFragment extends Fragment implements OnClickListener
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     mReturnHour = hourOfDay;
                     mReturnMinute = minute;
-                    mReturnVehicleTimeButton.setText(mReturnHour + ":" + mReturnMinute);
+                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                    final Calendar c = Calendar.getInstance();
+                    c.set(mReturnYear, mReturnMonth - 1, mReturnDay, mReturnHour, mReturnMinute, 0);
+//                    Date date = new Date();
+//                    date.setHours(hourOfDay);
+//                    date.setMinutes(minute);
+                    String time = sdf.format(c.getTime());                      
+                    mReturnVehicleTimeButton.setText(time);
                 }
             };  	
 	
@@ -242,7 +273,7 @@ public class OrderChooseTimeFragment extends Fragment implements OnClickListener
 				DatePickerDialog dpd = new DatePickerDialog(
 						mActivity,
                         mTakeDateSetListener,
-                        mTakeYear, mTakeMonth, mTakeDay);
+                        mTakeYear, mTakeMonth - 1, mTakeDay);
 				dpd.show();
 			}
 		});
@@ -263,7 +294,7 @@ public class OrderChooseTimeFragment extends Fragment implements OnClickListener
 				DatePickerDialog dpd = new DatePickerDialog(
 						mActivity,
                         mReturnDateSetListener,
-                        mReturnYear, mReturnMonth, mReturnDay);
+                        mReturnYear, mReturnMonth - 1, mReturnDay);
 				dpd.show();			
 			}
 		});
@@ -404,12 +435,12 @@ public class OrderChooseTimeFragment extends Fragment implements OnClickListener
 			c.set(mTakeYear, mTakeMonth - 1, mTakeDay, mTakeHour, mTakeMinute);
 			long takeVehicleDate = c.getTimeInMillis();
 			long currentTimeMillis = System.currentTimeMillis();
-			if ((takeVehicleDate - currentTimeMillis) > MINUTES_MAX_30
-					|| (takeVehicleDate - currentTimeMillis) < 0) {
-				Toast.makeText(mActivity, R.string.threshold_30_minutes,
-						Toast.LENGTH_SHORT).show();
-				return;
-			}
+//			if ((takeVehicleDate - currentTimeMillis) > MINUTES_MAX_30
+//					|| (takeVehicleDate - currentTimeMillis) < 0) {
+//				Toast.makeText(mActivity, R.string.threshold_30_minutes,
+//						Toast.LENGTH_SHORT).show();
+//				return;
+//			}
 			c.set(mReturnYear, mReturnMonth - 1, mReturnDay, mReturnHour,
 					mReturnMinute);
 			long returnVehicleDate = c.getTimeInMillis();

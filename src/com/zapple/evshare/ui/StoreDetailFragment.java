@@ -746,13 +746,17 @@ public class StoreDetailFragment extends Fragment {
          * @param info
          *          The info of the new fragment.          
          */
-        public void onReservationClicked(NewFragmentInfo info);        
+        public void onReservationClicked(NewFragmentInfo info);       
+        
+        public void onStoreDetailBackClicked(NewFragmentInfo info);
     }
     
     private static class EmptyCallback implements Callback {
         public static final Callback INSTANCE = new EmptyCallback();
         @Override
-        public void onReservationClicked(NewFragmentInfo info) {};
+        public void onReservationClicked(NewFragmentInfo info) {}
+		@Override
+		public void onStoreDetailBackClicked(NewFragmentInfo info) {};
     }    
     
     public void setCallback(Callback callback) {

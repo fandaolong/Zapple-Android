@@ -16,40 +16,55 @@
 
 package com.zapple.evshare.ui;
 
+import com.zapple.evshare.EvShareApp;
 import com.zapple.evshare.R;
+import com.zapple.evshare.data.LoginResult;
+import com.zapple.evshare.data.PersonalInfo;
+import com.zapple.evshare.transaction.WebServiceController;
 
-import android.accounts.AccountAuthenticatorResponse;
-import android.accounts.AccountManager;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.preference.PreferenceManager;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Toast;
 
-/**
- * This activity providers Account setup feature.
- */
-public class AccountSetupActivity extends Activity implements OnClickListener {
-	private static final String TAG = AccountSetupActivity.class.getSimpleName();
+public class AccountRegisterActivity extends Activity {
+	private static final String TAG = AccountRegisterActivity.class.getSimpleName();
 	private static final boolean DEBUG = true;
-	private static final int LOGIN_REQUEST_CODE = 1000;
-	private static final int REGISTER_REQUEST_CODE = 1001;
-	
-	private Button mLoginButton;
+    
+	private EditText mLastNameEditText;
+	private EditText mFirstNameEditText;
 	private Button mRegisterButton;
-	private AccountAuthenticatorResponse mAuthenticatorResponse;
-	
-    /**
-     * This generates setup data that can be used to start a self-contained account creation flow
-     * for pop/imap accounts.
-     */
-    public static Intent actionSetupAccountIntent(Context context) {
-        Intent i = new Intent(context, AccountSetupActivity.class);
-        return i;
-    }	
+	private Button mBackButton;
+
+    private TextWatcher mTextWatcher = new TextWatcher() {
+        public void afterTextChanged(Editable s) {
+            setFieldStatus();
+        }
+
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+    };
 	
     /**
      * Called when the activity is starting.  This is where most initialization
@@ -64,22 +79,36 @@ public class AccountSetupActivity extends Activity implements OnClickListener {
 		if (DEBUG) Log.d(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.account_setup_layout);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.account_register_layout);
 		
 		// find view section
-		mLoginButton = (Button) findViewById(R.id.login_button);
+		mLastNameEditText = (EditText) findViewById(R.id.last_name_edit_text);
+		mFirstNameEditText = (EditText) findViewById(R.id.first_name_edit_text);
 		mRegisterButton = (Button) findViewById(R.id.register_button);
+		mBackButton = (Button) findViewById(R.id.back_button);
+				
+		mLastNameEditText.addTextChangedListener(mTextWatcher);
+		mFirstNameEditText.addTextChangedListener(mTextWatcher);
+
+		mRegisterButton.setOnClickListener(new View.OnClickListener() {			
+			public void onClick(View v) {
+			}
+		});
+		mBackButton.setOnClickListener(new View.OnClickListener() {			
+			public void onClick(View v) {
+				finish();
+			}
+		});
 		
-		mLoginButton.setOnClickListener(this);
-		mRegisterButton.setOnClickListener(this);
-		
-		setTitle(R.string.account_setup_title);
-		
-        // Set aside incoming AccountAuthenticatorResponse, if there was any
-		mAuthenticatorResponse =
-            getIntent().getParcelableExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);		
 	}
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.activity_login, menu);
+        return true;
+    }	
+	
     /**
      * Called after {@link #onStop} when the current activity is being
      * re-displayed to the user (the user has navigated back to it).  It will
@@ -181,93 +210,19 @@ public class AccountSetupActivity extends Activity implements OnClickListener {
 		
 		// TODO: deal thread, ..., etc.
 	}
-
-	@Override
-	public void onClick(View arg0) {
-		switch (arg0.getId()) {
-		case R.id.login_button: {
-			doActionEnterAccountLogin();
-			break;
-		}
-		case R.id.register_button: {
-			doActionEnterRegister();
-			break;
-		}
-		}
-	}
 	
-    @Override
-    public void finish() {
-        // If the account manager initiated the creation, and success was not reported,
-        // then we assume that we're giving up (for any reason) - report failure.
-        if (mAuthenticatorResponse != null) {
-        	mAuthenticatorResponse.onError(AccountManager.ERROR_CODE_CANCELED, "canceled");
+	// private method do action section
+    
+    
+	// private method section
+    private void setFieldStatus() {
+        if (!TextUtils.isEmpty(mLastNameEditText.getText().toString().trim())
+                && !TextUtils.isEmpty(mFirstNameEditText.getText().toString().trim())) {
+            mRegisterButton.setEnabled(true);
+        } else {
+            mRegisterButton.setEnabled(false);
         }
-        super.finish();
-    }	
-	
-    /**
-     * Called when an activity you launched exits, giving you the requestCode
-     * you started it with, the resultCode it returned, and any additional
-     * data from it.  The <var>resultCode</var> will be
-     * {@link #RESULT_CANCELED} if the activity explicitly returned that,
-     * didn't return any result, or crashed during its operation.
-     * 
-     * <p>You will receive this call immediately before onResume() when your
-     * activity is re-starting.
-     * 
-     * @param requestCode The integer request code originally supplied to
-     *                    startActivityForResult(), allowing you to identify who this
-     *                    result came from.
-     * @param resultCode The integer result code returned by the child activity
-     *                   through its setResult().
-     * @param data An Intent, which can return result data to the caller
-     *               (various data can be attached to Intent "extras").
-     * 
-     * @see #startActivityForResult
-     * @see #createPendingResult
-     * @see #setResult(int)
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	if (DEBUG) {
-    		Log.d(TAG, "onActivityResult." + requestCode + ", resultCode." +resultCode );
-    	}
-    	if (resultCode != Activity.RESULT_OK) {
-    		return;
-    	}
-    	switch (requestCode) {
-    	case LOGIN_REQUEST_CODE: {
-    		mAuthenticatorResponse = null;
-    		finish();
-    		break;
-    	}
-    	case REGISTER_REQUEST_CODE: {
-    		mAuthenticatorResponse = null;
-    		finish();
-    		break;
-    	}
-    	}
     }
     
-	// private method do action section
-	private void doActionEnterAccountLogin() {
-		Intent intent = new Intent(this, AccountLoginActivity.class);
-		if (mAuthenticatorResponse != null) {
-			intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, mAuthenticatorResponse);			
-		}		
-		startActivityForResult(intent, LOGIN_REQUEST_CODE);
-	}
-	
-	private void doActionEnterRegister() {
-		Intent intent = new Intent(this, AccountRegisterActivity.class);
-		if (mAuthenticatorResponse != null) {
-			intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, mAuthenticatorResponse);			
-		}		
-		startActivityForResult(intent, REGISTER_REQUEST_CODE);
-	}	
-	
-	// private method section
-	
 	// private class section    
 }

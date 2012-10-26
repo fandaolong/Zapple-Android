@@ -260,5 +260,16 @@
 	<string name="account_setup_login">Login</string>
 	<string name="account_setup_register">Register</string>		
 	<string name="account_setup_prompt">You want to login exist account or create a new account</string>
-	<string name="account_setup_title">Login ZAPPLE　Account</string>					
+	<string name="account_setup_title">Login ZAPPLE　Account</string>
+	
+	<string name="account_login_email_hint">Email</string>
+	<string name="account_login_password_hint">Password</string>
+	<string name="account_login_legal">You agree the service and private legal for member.</string>
+	<string name="account_login_push_check_label">Receive ZAPPLE news and update service</string>
+	
+	<string name="account_register_title">Your Name</string>
+	<string name="account_register_note_hint">Your name for more service from ZAPPLE</string>
+	<string name="account_register_last_name_hint">Last Name</string>
+	<string name="account_register_first_name_hint">First Name</string>
+	<string name="account_register_register_button_text">Register</string>								
 </resources>

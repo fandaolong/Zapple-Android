@@ -181,6 +181,14 @@
             </intent-filter>
         </activity>        
         
+        <activity
+            android:name=".ui.AccountLoginActivity"
+            android:configChanges="orientation|keyboardHidden"/>     
+            
+        <activity
+            android:name=".ui.AccountRegisterActivity"
+            android:configChanges="orientation|keyboardHidden"/>          
+        
 		<service 
 			android:name=".service.GpsService" >
 			<intent-filter>

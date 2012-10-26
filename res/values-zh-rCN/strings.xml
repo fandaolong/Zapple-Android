@@ -259,8 +259,19 @@
 	
 	<string name="account_settings_action">"帐户设置"</string>	
 	<string name="account_settings_summary">"同步频率、通知等。"</string>
-	<string name="account_setup_login">"登录"</string>
-	<string name="account_setup_register">"注册"</string>
+	<string name="account_setup_login">"登    录"</string>
+	<string name="account_setup_register">"注    册"</string>
 	<string name="account_setup_prompt">"你希望登录现有账户或者注册一个新账户？"</string>
 	<string name="account_setup_title">"登录ZAPPLE账户"</string>
+	
+	<string name="account_login_email_hint">"邮    箱"</string>
+	<string name="account_login_password_hint">"密    码"</string>
+	<string name="account_login_legal">"您同意ZAPPLE会员服务条款和隐私保护策略。"</string>
+	<string name="account_login_push_check_label">"接收ZAPPLE新闻和服务更新"</string>
+	
+	<string name="account_register_title">"您的姓名"</string>
+	<string name="account_register_note_hint">"您的姓名用来定制个性化ZAPPLE服务"</string>
+	<string name="account_register_last_name_hint">"姓"</string>
+	<string name="account_register_first_name_hint">"名"</string>
+	<string name="account_register_register_button_text">"注    册"</string>	
 </resources>

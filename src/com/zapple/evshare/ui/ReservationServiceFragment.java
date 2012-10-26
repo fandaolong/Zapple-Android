@@ -151,6 +151,23 @@ public class ReservationServiceFragment extends Fragment {
                     mTimeTextView.setText(time);                      
                 }
             };    
+            
+    /**
+     * Create a new instance with initialization parameters.
+     *
+     * This fragment should be created only with this method.  (Arguments should always be set.)
+     *
+     * @param accountId The ID of the account we want to view
+     * @param initialCurrentMailboxId ID of the mailbox of interest.
+     *        Pass {@link Mailbox#NO_MAILBOX} to show top-level mailboxes.
+     * @param enableHighlight {@code true} if highlighting is enabled on the current screen
+     *        configuration.  (We don't highlight mailboxes on one-pane.)
+     */
+    public static ReservationServiceFragment newInstance(NewFragmentInfo info) {
+        final ReservationServiceFragment instance = new ReservationServiceFragment();
+        instance.setArguments(info.mArgs);
+        return instance;
+    }              
     
     /**
      * Called when a fragment is first attached to its activity.

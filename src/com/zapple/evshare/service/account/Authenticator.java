@@ -35,9 +35,9 @@ import android.util.Log;
  * Simple authenticator.  It has no "login" dialogs/activities.  When you add a new account, it'll
  * just create a new account with a unique name.
  */
-class Authenticator extends AbstractAccountAuthenticator {
+public class Authenticator extends AbstractAccountAuthenticator {
 	private final static String TAG = Authenticator.class.getSimpleName();
-	private final static String ACCOUNT_TYPE = "com.zapple.evshare.service.account.auth.basic";
+	public final static String ACCOUNT_TYPE = "com.zapple.evshare.service.account.auth.basic";
     private static final String PASSWORD = "xxx"; // any string will do.
     public static final String OPTIONS_USERNAME = "username";
     public static final String OPTIONS_PASSWORD = "password";
