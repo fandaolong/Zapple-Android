@@ -67,33 +67,31 @@
         android:lines="1"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal" >
+        android:layout_alignParentBottom="true" >
 
         <Button
             android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
             android:layout_margin="5dip"
-            android:background="@drawable/btn_grey_selector"
-            android:enabled="false"
-            android:minWidth="150dip"
-            android:text="@string/back_label"
+            android:background="@drawable/ic_left_selector"
             android:textColor="@android:color/black" />
 
         <Button
             android:id="@+id/register_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_margin="5dip"
-            android:background="@drawable/btn_grey_selector"
+            android:background="@drawable/ic_right_selector"
             android:enabled="false"
-            android:minWidth="150dip"
-            android:text="@string/account_register_register_button_text"
             android:textColor="@android:color/black" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

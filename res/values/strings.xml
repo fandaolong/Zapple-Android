@@ -247,6 +247,7 @@
 	
 	<string name="action_bar_search">Search</string>
 	<string name="action_bar_login">Login</string>
+	<string name="action_bar_logout">Logout</string>
 	<string name="action_bar_favorite">Favorite</string>
 	<string name="action_bar_help">Help</string>
 	<string name="action_bar_setting">Setting</string>
@@ -271,5 +272,41 @@
 	<string name="account_register_note_hint">Your name for more service from ZAPPLE</string>
 	<string name="account_register_last_name_hint">Last Name</string>
 	<string name="account_register_first_name_hint">First Name</string>
-	<string name="account_register_register_button_text">Register</string>								
+	<string name="account_register_register_button_text">Register</string>						
+	
+	<string name="order_management_brand_model_label">Brand (Model):</string>
+	<string name="order_management_order_id_status_label">Order ID - Status:</string>
+	<string name="order_management_cancel_order_label">Cancel Order</string>
+	<string name="order_management_pay_order_label">Pay</string>
+	<string name="order_management_take_vehicle_date_label">Take Date:</string>
+	<string name="order_management_return_vehicle_date_label">  Return Date:</string>
+	<string name="order_management_take_address_label">Take Address</string>
+	
+	<string name="order_status_waiting_take_label">Waiting Take</string>
+	<string name="order_status_unpaid_label">Unpaid</string>
+	<string name="order_status_renting_label">Renting</string>
+	<string name="order_status_returned_label">Returned</string>		
+	
+	<string name="confirm_logout_dialog_title">Are you sure logout and exit?</string>		
+	
+	<string name="account_management_card_id_label">Card ID:</string>
+	<string name="account_management_account_balance_label">Account Balance:</string>
+	<string name="account_management_yuan_label"> Yuan</string>	
+	
+	<string name="load_more_prompt">Load more</string>	
+	<string name="loaded_all_prompt">Loaded all</string>
+	<string name="account_management_list_item_id_label">ID:</string>
+	<string name="account_management_list_item_fee_label">Fee:</string>
+	<string name="account_management_list_item_date_label">Reservation Date:</string>
+	<string name="account_management_list_item_paid_channel_type_label">Paid Channel-Type:</string>
+	
+	<string name="order_check_remaining_label">Account Remaining: $</string>
+	<string name="order_check_brand_model_label">Brand(Model):</string>
+	<string name="order_check_take_store_name_label">Take Store Name:</string>
+	<string name="order_check_take_vehicle_date_label">Take Vehicle Date:</string>
+	<string name="order_check_return_store_name_label">Return Store Name:</string>
+	<string name="order_check_vehicle_fee_label">Vehicle Fee:</string>
+	<string name="order_check_added_fee_label">Added Fee:</string>
+	<string name="order_check_other_fee_label">Other Fee:</string>
+	<string name="order_check_total_amount_label">Total Amount:</string>		
 </resources>

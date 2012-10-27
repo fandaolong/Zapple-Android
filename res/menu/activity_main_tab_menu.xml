@@ -23,8 +23,8 @@
           android:icon="@android:drawable/ic_menu_more"
           android:showAsAction="ifRoom">    
 	    <menu>            
-		    <item android:id="@+id/action_login"
-		          android:title="@string/action_bar_login" 
+		    <item android:id="@+id/action_logout"
+		          android:title="@string/action_bar_logout" 
 		          android:showAsAction="ifRoom"/>
 		    <item android:id="@+id/action_favorite"
 		          android:showAsAction="ifRoom"

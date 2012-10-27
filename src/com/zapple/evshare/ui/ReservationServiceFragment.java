@@ -198,9 +198,6 @@ public class ReservationServiceFragment extends Fragment {
     	if (DEBUG) Log.v(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         mActivity = getActivity();
-        Intent intent = new Intent(Constants.TITLE_CHANGE_ACTION);
-        intent.putExtra(Constants.TITLE_CHANGE_EXTRA, mActivity.getString(R.string.reservation_service_title));
-        mActivity.sendBroadcast(intent);
     }
 
     /**
@@ -395,6 +392,9 @@ public class ReservationServiceFragment extends Fragment {
     public void onResume() {
     	if (DEBUG) Log.v(TAG, "onResume");
     	super.onResume();
+        Intent intent = new Intent(Constants.TITLE_CHANGE_ACTION);
+        intent.putExtra(Constants.TITLE_CHANGE_EXTRA, mActivity.getString(R.string.reservation_service_title));
+        mActivity.sendBroadcast(intent);    	
     }
     
     /**

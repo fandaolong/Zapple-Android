@@ -22,6 +22,7 @@ import com.zapple.evshare.data.LoginResult;
 import com.zapple.evshare.data.PersonalInfo;
 import com.zapple.evshare.service.account.Authenticator;
 import com.zapple.evshare.transaction.WebServiceController;
+import com.zapple.evshare.util.Constants;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -89,13 +90,17 @@ public class AccountLoginActivity extends Activity {
                     		 Toast.LENGTH_SHORT).show();  
                      EvShareApp.getApplication().setLogined(true);
                      if (mAuthenticatorResponse != null) {
+                    	 
                          final Account account = new Account(mAccountEditText.getText().toString().trim(),
                         		 Authenticator.ACCOUNT_TYPE);
                          AccountManager.get(AccountLoginActivity.this).addAccountExplicitly(
                                      account, mPasswordEditText.getText().toString().trim(), null);                    	 
                     	 mAuthenticatorResponse.onResult(null); 
                     	 mAuthenticatorResponse = null;
-                     }                     
+
+                     } else {
+                    	 doActionEnterMain();
+                     }
                      setResult(RESULT_OK);
                      finish();
                     break;
@@ -177,6 +182,7 @@ public class AccountLoginActivity extends Activity {
         	mAccountEditText.setText(account);
         	mPasswordEditText.setText(password);
         }		
+        // just for test
 //    	mAccountEditText.setText("fanruibing@gmail.com");
 //    	mPasswordEditText.setText("!@#$asdf9");
 //    	mAccountEditText.setText("897361589@qq.com");
@@ -186,7 +192,15 @@ public class AccountLoginActivity extends Activity {
     	
         // Set aside incoming AccountAuthenticatorResponse, if there was any
 		mAuthenticatorResponse =
-            getIntent().getParcelableExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);	    	
+            getIntent().getParcelableExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);	   
+		
+		account = getIntent().getStringExtra(Constants.ACCOUNT_NAME_EXTRA);
+		password = getIntent().getStringExtra(Constants.ACCOUNT_PASSWORD_EXTRA);
+        if (!TextUtils.isEmpty(account) && !TextUtils.isEmpty(password)) {
+        	mAccountEditText.setText(account);
+        	mPasswordEditText.setText(password);
+        	doActionLogin();
+        }		
 	}
 
     @Override
@@ -326,13 +340,13 @@ public class AccountLoginActivity extends Activity {
         mLoginThread.start();
     }	
 	
-    private void doActionEnterterAccount() {
-//        Intent intent = new Intent(LoginActivity.this, RegisterAccountActivity.class);
-//        try {
-//            startActivity(intent);
-//        } catch (ActivityNotFoundException e) {
-//            Log.e(TAG, "doActionEnterRegisterAccount->", e);
-//        }
+    private void doActionEnterMain() {
+        Intent intent = new Intent(this, MainTabActivity.class);
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Log.e(TAG, "doActionEnterMain->", e);
+        }
     }
     
     private void doActionEnterRetrievePassword() {

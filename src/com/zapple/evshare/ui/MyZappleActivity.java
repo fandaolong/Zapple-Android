@@ -128,6 +128,9 @@ public class MyZappleActivity extends Activity implements OnClickListener {
 	public void onResume() {
 		if (DEBUG) Log.d(TAG, "onResume");
 		super.onResume();
+        Intent intent = new Intent(Constants.TITLE_CHANGE_ACTION);
+        intent.putExtra(Constants.TITLE_CHANGE_EXTRA, getString(R.string.my_zapple_label));
+        sendBroadcast(intent);		
 	}
 
     /**

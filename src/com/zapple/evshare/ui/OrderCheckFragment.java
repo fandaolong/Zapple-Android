@@ -19,6 +19,8 @@ package com.zapple.evshare.ui;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.zapple.evshare.R;
 import com.zapple.evshare.data.LoginResult;
 import com.zapple.evshare.data.NewFragmentInfo;
@@ -49,6 +51,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -68,14 +71,13 @@ public class OrderCheckFragment extends Fragment implements OnClickListener {
 	
 	private TextView mMemberNameTextView;
 	private TextView mRemainingTextView;
-	private TextView mModelTextView;
-	private TextView mBrandTextView;
+	private ImageView mVehiclePhotoImageView;
+	private TextView mBrandModelTextView;
 	private TextView mTakeStoreNameTextView;
 	private TextView mTakeVehicleTimeTextView;
 	private TextView mReturnStoreNameTextView;
-	private TextView mReturnVehicleTimeTextView;
 	private TextView mVehicleFeeTextView;
-	private TextView mAddedValueFeeTextView;
+	private TextView mAddedFeeTextView;
 	private TextView mOtherFeeTextView;
 	private TextView mTotalAmountTextView;
 	private Button mPreviousButton;
@@ -167,9 +169,6 @@ public class OrderCheckFragment extends Fragment implements OnClickListener {
     	if (DEBUG) Log.v(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         mActivity = getActivity();
-        Intent intent = new Intent(Constants.TITLE_CHANGE_ACTION);
-        intent.putExtra(Constants.TITLE_CHANGE_EXTRA, mActivity.getString(R.string.order_check_label));
-        mActivity.sendBroadcast(intent);
     }
 
     /**
@@ -235,14 +234,13 @@ public class OrderCheckFragment extends Fragment implements OnClickListener {
         // find view section
 		mMemberNameTextView = (TextView) v.findViewById(R.id.member_name_text_view);
 		mRemainingTextView = (TextView) v.findViewById(R.id.remaining_text_view);
-		mModelTextView = (TextView) v.findViewById(R.id.model_text_view);
-		mBrandTextView = (TextView) v.findViewById(R.id.brand_text_view);
+		mVehiclePhotoImageView = (ImageView) v.findViewById(R.id.vehicle_photo_image_view);
+		mBrandModelTextView = (TextView) v.findViewById(R.id.brand_model_text_view);
 		mTakeStoreNameTextView = (TextView) v.findViewById(R.id.take_store_name_text_view);
 		mTakeVehicleTimeTextView = (TextView) v.findViewById(R.id.take_vehicle_time_text_view);
 		mReturnStoreNameTextView = (TextView) v.findViewById(R.id.return_store_name_text_view);
-		mReturnVehicleTimeTextView = (TextView) v.findViewById(R.id.return_vehicle_time_text_view);
-		mVehicleFeeTextView = (TextView) v.findViewById(R.id.vechicle_fee_text_view);
-		mAddedValueFeeTextView = (TextView) v.findViewById(R.id.added_value_fee_text_view);
+		mVehicleFeeTextView = (TextView) v.findViewById(R.id.vehicle_fee_text_view);
+		mAddedFeeTextView = (TextView) v.findViewById(R.id.added_fee_text_view);
 		mOtherFeeTextView = (TextView) v.findViewById(R.id.other_fee_text_view);
 		mTotalAmountTextView = (TextView) v.findViewById(R.id.total_amount_text_view);		
 		mPreviousButton = (Button) v.findViewById(R.id.previous_button);
@@ -264,16 +262,23 @@ public class OrderCheckFragment extends Fragment implements OnClickListener {
 	        String account = sharedPreferences.getString(LoginResult.LOGIN_RESULT_ACCOUNT_KEY, "");
 	        mSubmitOrder.mUserName = account;
 			mMemberNameTextView.setText(account);
-//			mRemainingTextView.setText(mSubmitOrder.);
-			mModelTextView.setText(mSubmitOrder.mModel);
-			mBrandTextView.setText(mSubmitOrder.mBrand);
-			mTakeStoreNameTextView.setText(mSubmitOrder.mTakeStoreName);
-			mTakeVehicleTimeTextView.setText((new Date(Long.parseLong(mSubmitOrder.mTakeVehicleDate))).toLocaleString());
-			mReturnStoreNameTextView.setText(mSubmitOrder.mReturnStoreName);
-			mReturnVehicleTimeTextView.setText((new Date(Long.parseLong(mSubmitOrder.mReturnVehicleDate))).toLocaleString());
-			mVehicleFeeTextView.setText(mSubmitOrder.mVehicleFee);
-			mAddedValueFeeTextView.setText(mSubmitOrder.mAddedFee);
-			mOtherFeeTextView.setText(mSubmitOrder.mOtherFee);
+			// TODO: remove the dead string "4250" , use the data from server.
+			mRemainingTextView.setText(mActivity.getResources().getString(R.string.order_check_remaining_label) + "4250" + mActivity.getResources().getString(R.string.account_management_yuan_label));
+	        if (!TextUtils.isEmpty(mSubmitOrder.mVehiclePhotoUri)) {
+	        	// Get singletone instance of ImageLoader
+	        	ImageLoader imageLoader = ImageLoader.getInstance();
+	        	// Initialize ImageLoader with configuration. Do it once.
+	        	imageLoader.init(ImageLoaderConfiguration.createDefault(mActivity));
+	        	// Load and display image asynchronously
+	        	imageLoader.displayImage(Constants.SERVER_HOST + mSubmitOrder.mVehiclePhotoUri, mVehiclePhotoImageView);
+	        }
+			mBrandModelTextView.setText(mActivity.getResources().getString(R.string.order_check_brand_model_label) + mSubmitOrder.mModel + " " + mSubmitOrder.mBrand);
+			mTakeStoreNameTextView.setText(mActivity.getResources().getString(R.string.order_check_take_store_name_label) + mSubmitOrder.mTakeStoreName);
+			mTakeVehicleTimeTextView.setText(mActivity.getResources().getString(R.string.order_check_take_vehicle_date_label) + (new Date(Long.parseLong(mSubmitOrder.mTakeVehicleDate))).toLocaleString());
+			mReturnStoreNameTextView.setText(mActivity.getResources().getString(R.string.order_check_return_store_name_label) + mSubmitOrder.mReturnStoreName);
+			mVehicleFeeTextView.setText(mActivity.getResources().getString(R.string.order_check_vehicle_fee_label) + mSubmitOrder.mVehicleFee);
+			mAddedFeeTextView.setText(mActivity.getResources().getString(R.string.order_check_added_fee_label) + mSubmitOrder.mAddedFee);
+			mOtherFeeTextView.setText(mActivity.getResources().getString(R.string.order_check_other_fee_label) + mSubmitOrder.mOtherFee);
 			long amount = 0;
 			try {
 				amount = Long.parseLong(mSubmitOrder.mVehicleFee) + Long.parseLong(mSubmitOrder.mAddedFee) + Long.parseLong(mSubmitOrder.mAddedFee);	
@@ -305,6 +310,9 @@ public class OrderCheckFragment extends Fragment implements OnClickListener {
     public void onResume() {
     	if (DEBUG) Log.v(TAG, "onResume");
     	super.onResume();
+        Intent intent = new Intent(Constants.TITLE_CHANGE_ACTION);
+        intent.putExtra(Constants.TITLE_CHANGE_EXTRA, mActivity.getString(R.string.order_check_label));
+        mActivity.sendBroadcast(intent);    	
     }
     
     /**

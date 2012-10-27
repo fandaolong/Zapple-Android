@@ -37,13 +37,19 @@ import com.zapple.evshare.R;
 import com.zapple.evshare.util.Constants;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
 import android.text.TextUtils;
@@ -81,6 +87,7 @@ public class MainTabActivity extends TabActivity implements
 	private TabSpec mMyZappleTabSpec;
 	private TabSpec mHelptabSpec;
     private String[] mTagSpec;
+    private SharedPreferences mSharedPreferences;
     private final BroadcastReceiver mTitleChangeReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -105,6 +112,10 @@ public class MainTabActivity extends TabActivity implements
         mTabHost = getTabHost();
         mTabHost.setup();
         mTabHost.setOnTabChangedListener(this);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+		Editor e = mSharedPreferences.edit();
+		e.remove(Constants.LOCATION_KEY);
+		e.commit();
         /*
          * get window width and set the tab width.
          */
@@ -170,8 +181,8 @@ public class MainTabActivity extends TabActivity implements
 	    		doActionEnterSearch();
 	    		break;
 	    	}
-	    	case R.id.action_login: {
-	    		doActionEnterLogin();
+	    	case R.id.action_logout: {
+	    		doActionEnterLogout();
 	    		break;
 	    	}
 	    	case R.id.action_favorite: {
@@ -323,6 +334,21 @@ public class MainTabActivity extends TabActivity implements
 
     }
     
+    private void doActionEnterLogout() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle(R.string.confirm_logout_dialog_title)
+            .setCancelable(true)
+            .setPositiveButton(R.string.cancel_label, null)
+            .setNegativeButton(R.string.ok_label, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+					exitApp();
+				}            	
+            })
+            .show();	
+    }    
+    
     private void doActionEnterLogin() {
     	Intent intent = new Intent(mContext, LoginActivity.class);
     	startActivity(intent);    	
@@ -350,6 +376,18 @@ public class MainTabActivity extends TabActivity implements
     
 
     // private method section
+	private void exitApp() {
+		String stringSDK = android.os.Build.VERSION.SDK;
+		int sdkversion = Integer.valueOf(stringSDK).intValue();
+		if (sdkversion <= 7) {
+			ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+			// require for restart permission
+			am.restartPackage(getPackageName());
+		} else {
+			android.os.Process.killProcess(android.os.Process.myPid());
+		}
+	}
+    
     /**
      * 抓取当前的城市信息
      * 
@@ -453,6 +491,9 @@ public class MainTabActivity extends TabActivity implements
 			if (TextUtils.isEmpty(result)) {
 				return;
 			}
+			Editor e = mSharedPreferences.edit();
+			e.putString(Constants.LOCATION_KEY, result);
+			e.commit();
 			mLoactionTextView.setText(result);
 		}
 	}

@@ -17,7 +17,10 @@
 package com.zapple.evshare.ui;
 
 import com.zapple.evshare.R;
+import com.zapple.evshare.service.account.Authenticator;
+import com.zapple.evshare.util.Constants;
 
+import android.accounts.Account;
 import android.accounts.AccountAuthenticatorResponse;
 import android.accounts.AccountManager;
 import android.app.Activity;
@@ -37,10 +40,16 @@ public class AccountSetupActivity extends Activity implements OnClickListener {
 	private static final boolean DEBUG = true;
 	private static final int LOGIN_REQUEST_CODE = 1000;
 	private static final int REGISTER_REQUEST_CODE = 1001;
+    // NORMAL is the standard entry from the Zapple app; ACCOUNT_MANAGER is used when entering via
+    // Settings -> Accounts
+    public static final int FLOW_MODE_NORMAL = 0;
+    public static final int FLOW_MODE_ACCOUNT_MANAGER = 1;	
 	
 	private Button mLoginButton;
 	private Button mRegisterButton;
 	private AccountAuthenticatorResponse mAuthenticatorResponse;
+	private int mFlowMode;
+	private Context mContext;
 	
     /**
      * This generates setup data that can be used to start a self-contained account creation flow
@@ -48,6 +57,7 @@ public class AccountSetupActivity extends Activity implements OnClickListener {
      */
     public static Intent actionSetupAccountIntent(Context context) {
         Intent i = new Intent(context, AccountSetupActivity.class);
+        i.putExtra(Constants.FLOW_MODE_EXTRA, FLOW_MODE_ACCOUNT_MANAGER);
         return i;
     }	
 	
@@ -64,6 +74,7 @@ public class AccountSetupActivity extends Activity implements OnClickListener {
 		if (DEBUG) Log.d(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
 		
+		mContext = this;
 		setContentView(R.layout.account_setup_layout);
 		
 		// find view section
@@ -77,7 +88,24 @@ public class AccountSetupActivity extends Activity implements OnClickListener {
 		
         // Set aside incoming AccountAuthenticatorResponse, if there was any
 		mAuthenticatorResponse =
-            getIntent().getParcelableExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);		
+            getIntent().getParcelableExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);	
+		
+		mFlowMode = getIntent().getIntExtra(Constants.FLOW_MODE_EXTRA, FLOW_MODE_NORMAL);
+		
+		if (FLOW_MODE_NORMAL == mFlowMode) {
+			Account[] accountArray = AccountManager.get(mContext).getAccountsByType(Authenticator.ACCOUNT_TYPE);
+			if (accountArray != null && accountArray.length > 0) {
+				Account account = accountArray[0];
+				if (account != null) {
+					String accountName = account.name;
+					String password = AccountManager.get(mContext).getPassword(account);
+					doActionEnterAccountLoginAuto(accountName, password);
+					finish();
+				}
+			}
+		} else {
+			
+		}
 	}
 
     /**
@@ -251,6 +279,13 @@ public class AccountSetupActivity extends Activity implements OnClickListener {
     }
     
 	// private method do action section
+    private void doActionEnterAccountLoginAuto(String accountName, String accountPassword) {
+		Intent intent = new Intent(this, AccountLoginActivity.class);
+		intent.putExtra(Constants.ACCOUNT_NAME_EXTRA, accountName);
+		intent.putExtra(Constants.ACCOUNT_PASSWORD_EXTRA, accountPassword);
+		startActivity(intent);    	
+    }
+    
 	private void doActionEnterAccountLogin() {
 		Intent intent = new Intent(this, AccountLoginActivity.class);
 		if (mAuthenticatorResponse != null) {

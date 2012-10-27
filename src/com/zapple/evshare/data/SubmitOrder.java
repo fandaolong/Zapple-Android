@@ -39,6 +39,7 @@ public class SubmitOrder implements Parcelable {
 	public String mVehicleFee;
 	public String mAddedFee;
 	public String mOtherFee;
+	public String mVehiclePhotoUri;
 	
 	@Override
 	public int describeContents() {
@@ -64,6 +65,7 @@ public class SubmitOrder implements Parcelable {
 		dest.writeString(mVehicleFee);
 		dest.writeString(mAddedFee);
 		dest.writeString(mOtherFee);
+		dest.writeString(mVehiclePhotoUri);
 	}
 	
 	public static final Parcelable.Creator<SubmitOrder> CREATOR
@@ -98,6 +100,7 @@ public class SubmitOrder implements Parcelable {
 		mVehicleFee = source.readString();
 		mAddedFee = source.readString();
 		mOtherFee = source.readString();
+		mVehiclePhotoUri = source.readString();
 	}
 	
 	public SubmitOrder() {

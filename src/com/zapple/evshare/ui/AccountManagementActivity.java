@@ -16,26 +16,41 @@
 
 package com.zapple.evshare.ui;
 
+import java.util.List;
+
 import com.zapple.evshare.R;
+import com.zapple.evshare.data.LoginResult;
+import com.zapple.evshare.data.Order;
+import com.zapple.evshare.data.QueryOrderResult;
+import com.zapple.evshare.transaction.WebServiceController;
+import com.zapple.evshare.util.Constants;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -44,22 +59,51 @@ import android.widget.Toast;
  * This activity providers add POS feature.
  */
 public class AccountManagementActivity extends Activity {
-	private static final String TAG = "AccountManagementActivity";
+	private static final String TAG = AccountManagementActivity.class.getSimpleName();
 	private static final boolean DEBUG = true;
-	private static final int UPLOAD_SUCCESS = 0;
-		
-	private TextView mPrePaidCardIdValueTextView;
-	private TextView mPrePaidCardRemainingValueTextView;
-	private Button mRechargeButton;
+	private static final int QUERY_SUCCESS = 0;
+	private static final int QUERY_FAILURE = 1;		
 	
+	// TODO: query card id from server instead of "0000 0000 0000 0000 32"
+	private String mCardId = "0000 0000 0000 0000 32";
+	private String mAccountBalance;
+	private ListView mListView;
+	private View mFooterView;
+	private TextView mFooterTextView;
+	
+	private Context mContext;
+	private List<Order> mOrderList;
+    private ProgressDialog mQueryOrderDialog;	
+    private Thread mQueryOrderThread = null;
 	private Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(final Message msg) {
 			switch (msg.what) {
-				case UPLOAD_SUCCESS:{
-					Toast.makeText(AccountManagementActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();					
-					break;
-				}
+            case QUERY_SUCCESS: {
+            	mListView.setAdapter(new OrderListArrayAdapter(mContext));
+//            	mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//					@Override
+//					public void onItemClick(AdapterView<?> arg0, View arg1,
+//							int arg2, long arg3) {
+//						if (DEBUG) Log.d(TAG, "setOnItemClickListener.arg2." + arg2);
+//						OrderListItem listItem = (OrderListItem) arg1;
+//						doActionEnterOrderDetail(listItem.getListItem().getId());							
+//					}                		
+//            	});
+                 Toast.makeText(mContext, R.string.query_order_success_label, 
+                		 Toast.LENGTH_SHORT).show();  
+                break;
+            }
+            case QUERY_FAILURE: {
+            	String failureReason;
+            	failureReason = getString(R.string.query_order_failure_label);
+            	if (msg.obj != null) {
+            		failureReason = failureReason + "--" + (String) msg.obj;
+            	}
+                Toast.makeText(mContext, failureReason, 
+                		Toast.LENGTH_SHORT).show();
+                break;
+            }
 			}
 		}
 	};
@@ -80,19 +124,39 @@ public class AccountManagementActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.account_management_layout);
 		
-		// find view section	
-		mPrePaidCardIdValueTextView = (TextView) findViewById(R.id.pre_paid_card_id_value_text_view);
-		mPrePaidCardRemainingValueTextView = (TextView) findViewById(R.id.pre_paid_card_remaining_value_text_view);
-		mRechargeButton = (Button) findViewById(R.id.recharge_button);
-		
-		mPrePaidCardIdValueTextView.setText("xxxxxx");
-		mPrePaidCardRemainingValueTextView.setText("xxxxxx");
-		mRechargeButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-//				doActionEnterRecharge();				
-			}			
+		mContext = this;
+		// find view section
+		mListView = (ListView) findViewById(R.id.list_view);
+		mListView.setEmptyView((TextView) findViewById(R.id.empty));
+		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				if (DEBUG) Log.d(TAG, "setOnItemClickListener.arg2." + arg2);
+				OrderListItem listItem = (OrderListItem) arg1;
+				OrderItem item = listItem.getListItem();
+		       	int statusCode = -1;
+	        	try {
+	        		statusCode = Integer.parseInt(item.getStatus());
+	        	} catch (Exception e) {
+	        		if (DEBUG) Log.e(TAG, "setOnItemClickListener.e." + e);
+	        	}
+	        	if (DEBUG) Log.d(TAG, "setOnItemClickListener.statusCode." + statusCode);
+				
+			}
 		});
+		View headerView = getLayoutInflater().inflate(R.layout.account_management_header_view, null);
+		TextView cardId = (TextView) headerView.findViewById(R.id.card_id_text_view);
+		cardId.setText(mCardId);
+		// TODO: query account balance from server instead of "1600"
+		mAccountBalance = "￥" + "1600" + getResources().getString(R.string.account_management_yuan_label);
+		TextView accountBalanceTextView = (TextView) headerView.findViewById(R.id.account_balance_text_view);
+		accountBalanceTextView.setText(mAccountBalance);
+		mListView.addHeaderView(headerView, null, true);	
+		
+		mFooterView = getLayoutInflater().inflate(R.layout.load_more_list_footer_view, null);
+		mFooterTextView = (TextView) mFooterView.findViewById(R.id.footer_text);
+		mListView.addFooterView(mFooterView, null, true);
+		doActionQueryOrder();
 	}
 
     /**
@@ -200,18 +264,125 @@ public class AccountManagementActivity extends Activity {
 	
 
 	// private method do action section	
-	private void doActionEnterRecharge() {
-//		Intent intent = new Intent(AccountManagementActivity.this, RechargePrePaidCardActivity.class);
-//		try {
-//			startActivity(intent);
-//		} catch (ActivityNotFoundException e) {
-//			Log.e(TAG, "doActionEnterRecharge->", e);
-//		}		
-	}
+    private void doActionQueryOrder() {
+		if (mQueryOrderDialog != null && mQueryOrderDialog.isShowing()) {
+			mQueryOrderDialog.dismiss();
+		}    	
+        mQueryOrderDialog = new ProgressDialog(this);
+        mQueryOrderDialog.setTitle(R.string.query_order_label);
+        mQueryOrderDialog.setMessage(getString(R.string.quering_order_prompt));
+        mQueryOrderDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            public void onDismiss(DialogInterface dialog) {
+                if (mQueryOrderThread != null && mQueryOrderThread.isInterrupted()) {
+                    // indicate thread should cancel
+                }
+            }
+        });
+        mQueryOrderDialog.setOwnerActivity(this);
+        mQueryOrderDialog.show();
+
+        //TODO: do action queryOrder
+        QueryOrderRunner queryOrderRunner = new QueryOrderRunner();
+        mQueryOrderThread = new Thread(queryOrderRunner);
+        mQueryOrderThread.start();
+    }
 		
 	// private method section
-
+    private void setFooterViewVisible(boolean isVisible) {
+    	if (isVisible) {
+    		mFooterTextView.setText(R.string.load_more_prompt);
+    	} else {
+    		mFooterTextView.setText(R.string.loaded_all_prompt);
+    	}
+    	mFooterView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
 	
 	// private class section
+	private class QueryOrderRunner implements Runnable {
 
+		public void run() {
+			// query order action
+			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+	        String account = sharedPreferences.getString(LoginResult.LOGIN_RESULT_ACCOUNT_KEY, "");
+	        String password = sharedPreferences.getString(LoginResult.LOGIN_RESULT_PASSWORD_KEY, "");
+			String startIndex = "0";
+			String endIndex = "100";
+			QueryOrderResult result = null;
+			try {
+				result = WebServiceController.queryOrders(account, password, startIndex, endIndex);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+			
+			// TODO: load more ?
+        	if (result != null && result.mOrderList != null && result.mOrderList.size() == 100) {
+        		setFooterViewVisible(true);
+        	} else {
+        		setFooterViewVisible(false);
+        	}
+			if (DEBUG) Log.d(TAG, "QueryOrderRunner->" + mOrderList);
+			
+			// Deal with upload result
+			Message msg = new Message();
+			if (result != null && result.mOrderList != null && TextUtils.isEmpty(result.mResult)) {
+				if (DEBUG) Log.d(TAG, "QueryOrderRunner->queryOrder success");
+        		msg.what = QUERY_SUCCESS;
+        		mOrderList = result.mOrderList;
+			} else {
+				msg.what = QUERY_FAILURE;
+				msg.obj = result != null ? result.mResult : "";
+				if (DEBUG) Log.d(TAG, "QueryOrderRunner->queryOrder failure.");
+			}
+			if (mQueryOrderDialog != null && mQueryOrderDialog.isShowing()) {
+				mQueryOrderDialog.dismiss();
+			}
+			mHandler.sendMessage(msg);
+		}		
+	}
+	
+	private class OrderListArrayAdapter extends BaseAdapter {
+		private TextView textView1;
+		private LayoutInflater inflater;
+
+		public OrderListArrayAdapter(Context context) {
+			inflater = LayoutInflater.from(context);
+		}
+		
+		public void setList(List<Order> list)
+		{
+			mOrderList = list;
+		}
+		
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return mOrderList.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return position;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			if (convertView == null) {
+				// 将自定义布局 －> View
+				convertView = inflater.inflate(R.layout.account_management_list_item, null);
+				// 获取元素
+			}
+			AccountManagementListItem headerView = (AccountManagementListItem) convertView;
+	        headerView.bind(mContext, mOrderList.get(position));
+
+			return convertView;
+		}
+	}	
 }

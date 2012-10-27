@@ -24,8 +24,10 @@ import com.zapple.evshare.data.Order;
 import com.zapple.evshare.data.Order.OrderTable;
 import com.zapple.evshare.data.QueryOrderResult;
 import com.zapple.evshare.transaction.WebServiceController;
+import com.zapple.evshare.util.Constants;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.AsyncQueryHandler;
@@ -68,6 +70,8 @@ public class OrderManagementActivity extends Activity {
     
 	private static final int QUERY_SUCCESS = 0;
 	private static final int QUERY_FAILURE = 1;		
+	private static final int CANCEL_ORDER_SUCCESS = 2;
+	private static final int CANCEL_ORDER_FAILURE = 3;	
 	
 	private ListView mListView;
 	private OrderListAdapter mListAdapter;
@@ -77,10 +81,21 @@ public class OrderManagementActivity extends Activity {
 	private List<Order> mOrderList;
     private ProgressDialog mQueryOrderDialog;
     private Thread mQueryOrderThread = null;
+	private ProgressDialog mCancelOrderDialog;
+	private Thread mCancelOrderThread = null;    
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(final Message msg) {
             switch (msg.what) {
+			case CANCEL_ORDER_SUCCESS:{
+				Toast.makeText(mContext, R.string.cancel_order_success_prompt, Toast.LENGTH_SHORT).show();		
+				finish();
+				break;
+			}
+			case CANCEL_ORDER_FAILURE:{
+				Toast.makeText(mContext, (String) msg.obj, Toast.LENGTH_SHORT).show();					
+				break;
+			}            
                 case QUERY_SUCCESS: {
                 	mListView.setAdapter(new OrderListArrayAdapter(mContext));
 //                	mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -138,7 +153,19 @@ public class OrderManagementActivity extends Activity {
 				if (DEBUG) Log.d(TAG, "setOnItemClickListener.arg2." + arg2);
 				OrderListItem listItem = (OrderListItem) arg1;
 				OrderItem item = listItem.getListItem();
-				doActionEnterOrderDetail(item.getRemoteId(), item.getName(), item.getOrder());					
+		       	int statusCode = -1;
+	        	try {
+	        		statusCode = Integer.parseInt(item.getStatus());
+	        	} catch (Exception e) {
+	        		if (DEBUG) Log.e(TAG, "setOnItemClickListener.e." + e);
+	        	}
+	        	if (DEBUG) Log.d(TAG, "setOnItemClickListener.statusCode." + statusCode);
+				if (Constants.ORDER_STATUS_WAITING_TAKE == statusCode) {
+					doActionCancelOrder(item.getRemoteId());
+				} else if (Constants.ORDER_STATUS_UNPAID == statusCode) {
+					
+				}
+				
 			}
 		});				
 		mBackgroundQueryHandler = new BackgroundQueryHandler(getContentResolver());	
@@ -279,19 +306,45 @@ public class OrderManagementActivity extends Activity {
         mQueryOrderThread.start();
     }
     
-	private void doActionEnterOrderDetail(String orderId, String orderName, Order order) {
-//		Intent intent = new Intent(OrderManagementActivity.this, OrderDetailActivity.class);
-//		intent.putExtra(OrderDetailActivity.ORDER_EXTRA, order);
-//		intent.putExtra(OrderDetailActivity.ORDER_ID_EXTRA, orderId);
-//		intent.putExtra(OrderDetailActivity.ORDER_NAME_EXTRA, orderName);
-//		try {
-//			startActivity(intent);
-//		} catch (ActivityNotFoundException e) {
-//			Log.e(TAG, "doActionEnterOrderDetail->", e);
-//		}		
+	private void doActionCancelOrder(final String orderId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle(R.string.confirm_cancel_dialog_title)
+            .setCancelable(true)
+            .setPositiveButton(R.string.cancel_label, null)
+            .setNegativeButton(R.string.ok_label, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					cancelOrder(orderId);
+					dialog.dismiss();
+				}            	
+            })
+            .show();		
 	}
 		
 	// private method section
+	private void cancelOrder(String orderId) {
+		if (mCancelOrderDialog != null && mCancelOrderDialog.isShowing()) {
+			mCancelOrderDialog.dismiss();
+		}		
+		mCancelOrderDialog = new ProgressDialog(this);
+//		mCancelOrderDialog.setTitle(R.string.submit_label);
+//		mCancelOrderDialog.setMessage(getString(R.string.submitting_prompt));
+		mCancelOrderDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {			
+			public void onDismiss(DialogInterface dialog) {
+				if(mCancelOrderThread != null && mCancelOrderThread.isInterrupted()) {
+					// indicate thread should cancel
+				}
+			}
+		});
+		mCancelOrderDialog.setOwnerActivity(this);
+		mCancelOrderDialog.show();
+		
+		
+		CancelOrderRunner cancelOrderRunner = new CancelOrderRunner(orderId);
+		mCancelOrderThread = new Thread(cancelOrderRunner);
+		mCancelOrderThread.start();		
+	}
+	
 	private void startListQuery() {
 		if (DEBUG) Log.d(TAG, "startListQuery");
         String selection = null;
@@ -333,6 +386,7 @@ public class OrderManagementActivity extends Activity {
 			if (result != null && result.mOrderList != null && TextUtils.isEmpty(result.mResult)) {
 				if (DEBUG) Log.d(TAG, "QueryOrderRunner->queryOrder success");
         		msg.what = QUERY_SUCCESS;
+        		mOrderList = result.mOrderList;
 			} else {
 				msg.what = QUERY_FAILURE;
 				msg.obj = result != null ? result.mResult : "";
@@ -344,6 +398,44 @@ public class OrderManagementActivity extends Activity {
 			mHandler.sendMessage(msg);
 		}		
 	}
+	
+	private class CancelOrderRunner implements Runnable {
+		private String mOrderId;
+		
+		CancelOrderRunner(String orderId) {
+			mOrderId = orderId;
+		}
+
+		public void run() {
+			// cancel order action
+			String result = null;
+			SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(mContext);
+			String userName = sp.getString(LoginResult.LOGIN_RESULT_ACCOUNT_KEY, null);
+			String password = sp.getString(LoginResult.LOGIN_RESULT_PASSWORD_KEY, null);
+			try {
+				result = WebServiceController.cancelOrder(userName, password, mOrderId);
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.e(TAG, "CancelOrderRunner->failure");
+			}				
+			
+			// deal with cancel order result
+			Message msg = new Message();
+			if (TextUtils.isEmpty(result)) {
+				msg.what = CANCEL_ORDER_SUCCESS;								
+				if (DEBUG) Log.d(TAG, "CancelOrderRunner->success.");
+			} else {
+				if (DEBUG) Log.d(TAG, "CancelOrderRunner->failure");
+        		msg.what = CANCEL_ORDER_FAILURE;
+        		msg.obj = result;				
+			}
+
+			if (mCancelOrderDialog != null && mCancelOrderDialog.isShowing()) {
+				mCancelOrderDialog.dismiss();
+			}
+			mHandler.sendMessage(msg);
+		}		
+	}	
 	
     private final class BackgroundQueryHandler extends AsyncQueryHandler {
         public BackgroundQueryHandler(ContentResolver contentResolver) {

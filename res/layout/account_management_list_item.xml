@@ -14,64 +14,41 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<com.zapple.evshare.ui.OrderListItem xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zapple.evshare.ui.AccountManagementListItem xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/brand_model_text_view"
+        android:id="@+id/id_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:textColor="#FF707070"
-        android:textSize="14sp" />
+        android:textSize="16sp" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
+    <TextView
+        android:id="@+id/fee_text_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/order_status_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:textColor="#FFb5b5b5"
-            android:textSize="12sp" />
-
-        <View
-            android:layout_width="1dip"
-            android:layout_height="10dip"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-            android:layout_gravity="center_vertical"
-            android:background="@color/vehicle_favorite_text_color" />
-
-        <TextView
-            android:id="@+id/cancel_order_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:text="@string/order_management_cancel_order_label"
-            android:textColor="#FF00A0E9"
-            android:textSize="12sp" />
-    </LinearLayout>
-
+        android:singleLine="true"
+        android:textColor="#FFb5b5b5"
+        android:textSize="14sp" />    
+    
     <TextView
         android:id="@+id/date_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:textColor="#FFb5b5b5"
-        android:textSize="12sp" />
-
+        android:textSize="14sp" />    
+    
     <TextView
-        android:id="@+id/take_vehicle_address_text_view"
+        android:id="@+id/paid_channel_type_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:textColor="#FFb5b5b5"
-        android:textSize="12sp" />
+        android:textSize="14sp" />
 
-</com.zapple.evshare.ui.OrderListItem>
+</com.zapple.evshare.ui.AccountManagementListItem>

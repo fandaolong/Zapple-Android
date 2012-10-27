@@ -49,4 +49,16 @@ public class Constants {
 	public static final String TITLE_CHANGE_EXTRA = "com.zapple.evshare.TITLE_CHANGE_EXTRA";
 	public static final String SUBMIT_ORDER_EXTRA = "submit_order_extra";
 	public static final String WHICH_MANAGEMENT_EXTRA = "which_management_extra";
+	public static final String FLOW_MODE_EXTRA = "flow_mode_extra";
+	public static final String ACCOUNT_NAME_EXTRA = "account_name_extra";
+	public static final String ACCOUNT_PASSWORD_EXTRA = "account_password_extra";
+	public static final String LOCATION_EXTRA = "location_extra";
+	
+	// key prefrence
+	public static final String LOCATION_KEY = "location_key";
+	
+	public static final int ORDER_STATUS_WAITING_TAKE = 0;
+	public static final int ORDER_STATUS_UNPAID = 1;
+	public static final int ORDER_STATUS_RENTING = 2;
+	public static final int ORDER_STATUS_RETURNED = 3;
 }

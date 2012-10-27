@@ -249,6 +249,7 @@
 	
 	<string name="action_bar_search">"搜    索"</string>
 	<string name="action_bar_login">"登    录"</string>
+	<string name="action_bar_logout">"登    出"</string>
 	<string name="action_bar_favorite">"收藏夹"</string>
 	<string name="action_bar_help">"帮    助"</string>
 	<string name="action_bar_setting">"设    置"</string>
@@ -274,4 +275,40 @@
 	<string name="account_register_last_name_hint">"姓"</string>
 	<string name="account_register_first_name_hint">"名"</string>
 	<string name="account_register_register_button_text">"注    册"</string>	
+	
+	<string name="order_management_brand_model_label">"车牌（车型）："</string>
+	<string name="order_management_order_id_status_label">"订单号-状态："</string>
+	<string name="order_management_cancel_order_label">"取消订单"</string>
+	<string name="order_management_pay_order_label">"网上支付"</string>
+	<string name="order_management_take_vehicle_date_label">"预定时间："</string>
+	<string name="order_management_return_vehicle_date_label">"  预计换车时间："</string>
+	<string name="order_management_take_address_label">"取车地点："</string>
+	
+	<string name="order_status_waiting_take_label">"待提"</string>
+	<string name="order_status_unpaid_label">"未支付"</string>
+	<string name="order_status_renting_label">"租用中"</string>
+	<string name="order_status_returned_label">"已还车"</string>
+	
+	<string name="confirm_logout_dialog_title">"确定要登出并退出系统？"</string>
+	
+	<string name="account_management_card_id_label">"储值卡卡号："</string>
+	<string name="account_management_account_balance_label">"账户余额："</string>
+	<string name="account_management_yuan_label">" 元"</string>
+	
+	<string name="load_more_prompt">"下载更多信息"</string>
+	<string name="loaded_all_prompt">"已全部下载完"</string>
+	<string name="account_management_list_item_id_label">"流水号："</string>
+	<string name="account_management_list_item_fee_label">"金额："</string>
+	<string name="account_management_list_item_date_label">"预定时间："</string>
+	<string name="account_management_list_item_paid_channel_type_label">"资金支付渠道-类型："</string>
+	
+	<string name="order_check_remaining_label">"帐户余额：￥"</string>
+	<string name="order_check_brand_model_label">"品牌（车型）："</string>
+	<string name="order_check_take_store_name_label">"取车网点："</string>
+	<string name="order_check_take_vehicle_date_label">"取车时间："</string>
+	<string name="order_check_return_store_name_label">"还车网点："</string>
+	<string name="order_check_vehicle_fee_label">"车辆租金："</string>
+	<string name="order_check_added_fee_label">"增值服务："</string>
+	<string name="order_check_other_fee_label">"其他费用："</string>
+	<string name="order_check_total_amount_label">"订单总额："</string>
 </resources>

@@ -101,6 +101,7 @@ public class VehicleListItem extends LinearLayout {
 				mSubmitOrder.mBrand = mVehicleItem.getBrand();
 				mSubmitOrder.mModel = mVehicleItem.getModel();
 				mSubmitOrder.mVehicleFee = mVehicleItem.getPrice();
+				mSubmitOrder.mVehiclePhotoUri = mVehicleItem.getPhotoUri();
 				if (DEBUG) Log.v(TAG, "mReservationTextView.mFromWhere." + mFromWhere);
 				if ((Constants.FROM_QUICK_ORDER == mFromWhere) ||
 						(Constants.FROM_STORE_LIST == mFromWhere) ||

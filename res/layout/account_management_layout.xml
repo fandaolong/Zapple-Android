@@ -21,62 +21,29 @@
 	android:orientation="vertical"
 	android:background="@color/default_bg_color">
 
-   <RelativeLayout 
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        
-	    <TextView
-	        android:id="@+id/pre_paid_card_id_text_view"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_alignParentTop="true"
-	        android:text="@string/pre_paid_card_id_label"/>
-	    
-	    <TextView
-	        android:id="@+id/pre_paid_card_id_value_text_view"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_below="@id/pre_paid_card_id_text_view" />	            
-    </RelativeLayout>    
-        
-	<View
-	    android:layout_width="match_parent"
-	    android:layout_height="1dip"
-	    android:background="@android:color/black"/>    
-   
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="0dip"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1.0"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="@android:color/transparent"
+            android:fadingEdgeLength="16dip"
+            android:listSelector="@drawable/list_item_selector"
+            android:scrollbarStyle="insideOverlay" />
 
         <TextView
-            android:id="@+id/pre_paid_card_remaining_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/pre_paid_card_remaining_label" />
-
-        <TextView
-            android:id="@+id/pre_paid_card_remaining_value_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/pre_paid_card_remaining_text_view"/>     
-    </RelativeLayout>    
-    
-	<View
-	    android:layout_width="match_parent"
-	    android:layout_height="1dip"
-	    android:background="@android:color/black"/> 
-	        
-    <Button 
-        android:id="@+id/recharge_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="@string/recharge_label"
-        android:textColor="@android:color/black"
-        android:background="@drawable/btn_grey_selector"/>	 	
+            android:id="@+id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/empty_prompt"
+            android:textAppearance="?android:attr/textAppearanceMediumInverse" />
+    </LinearLayout>
 </LinearLayout>

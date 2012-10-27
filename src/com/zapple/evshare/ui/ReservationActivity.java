@@ -21,6 +21,7 @@ import com.zapple.evshare.data.NewFragmentInfo;
 import com.zapple.evshare.ui.OrderChooseTimeFragment.Callback;
 import com.zapple.evshare.util.Constants;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
