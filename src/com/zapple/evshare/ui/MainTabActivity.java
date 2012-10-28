@@ -424,7 +424,8 @@ public class MainTabActivity extends TabActivity implements
     }    
     
     private void doActionEnterSearch() {
-
+    	Intent intent = new Intent(mContext, QueryStoreActivity.class);
+    	startActivity(intent);
     }
     
     private void doActionEnterLogout() {
