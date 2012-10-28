@@ -1,17 +1,5 @@
 /*
- * Copyright (C) 2012 Li Cong, forlong401@163.com
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright (C) 2012 Zapple, www.zapple.com.cn
  */
 
 package com.zapple.evshare.ui;
@@ -39,6 +27,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.text.Editable;
 import android.text.Html;
 import android.text.Spannable;
@@ -49,6 +38,7 @@ import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.URLSpan;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -193,20 +183,58 @@ public class AccountLoginActivity extends Activity {
 			}
 		});
 
-		Spanned legal = Html.fromHtml(getResources().getString(
-				R.string.account_login_legal)
-				+ "<a href=\"http://www.zapple.com.cn/html/fwtk\">"
-				+ getResources()
-						.getString(R.string.account_login_legal_service)
-				+ "</a>"
-				+ getResources().getString(R.string.account_login_legal_and)
-				+ "<a href=\"http://www.zapple.com.cn/html/cjwt\">"
-				+ getResources()
-						.getString(R.string.account_login_legal_private)
-				+ "</a>"
-				+ getResources().getString(R.string.account_login_legal_dot));
+//		Spanned legal = Html.fromHtml(getResources().getString(
+//				R.string.account_login_legal)
+//				+ "<a href=\"http://www.zapple.com.cn/html/fwtk\">"
+//				+ getResources()
+//						.getString(R.string.account_login_legal_service)
+//				+ "</a>"
+//				+ getResources().getString(R.string.account_login_legal_and)
+//				+ "<a href=\"http://www.zapple.com.cn/html/cjwt\">"
+//				+ getResources()
+//						.getString(R.string.account_login_legal_private)
+//				+ "</a>"
+//				+ getResources().getString(R.string.account_login_legal_dot));
+		
+	    StringBuffer sb = new StringBuffer(
+	    		"<html>" +
+	    		"<head>" +
+	    		"<META HTTP-EQUIV=\"Content-Type\" CONTENT=\"text/html; CHARSET=UTF-8\">" +
+	    		"</head>" +
+	    		"<body>");
+	    sb.append(getResources().getString(
+				R.string.account_login_legal));
+	    sb.append("<a href=\"http://www.zapple.com.cn/html/fwtk\">");
+	    sb.append(getResources()
+				.getString(R.string.account_login_legal_service));
+	    sb.append("</a>");
+	    sb.append(getResources()
+				.getString(R.string.account_login_legal_and));	    
+	    sb.append("<a href=\"http://www.zapple.com.cn/html/cjwt\">");
+	    sb.append(getResources()
+				.getString(R.string.account_login_legal_private));
+	    sb.append("</a>");	 
+	    sb.append(getResources()
+				.getString(R.string.account_login_legal_dot));
+	    sb.append("</body></html>");
+		if (DEBUG)
+			Log.d(TAG, "onCreate." + sb.toString());
+	    mLegalTextView.setText(Html.fromHtml(sb.toString()));	    
+//		String legal = getResources().getString(
+//				R.string.account_login_legal)
+//				+ "<a href=\"http://www.zapple.com.cn/html/fwtk\">"
+//				+ getResources()
+//						.getString(R.string.account_login_legal_service)
+//				+ "</a>"
+//				+ getResources().getString(R.string.account_login_legal_and)
+//				+ "<a href=\"http://www.zapple.com.cn/html/cjwt\">"
+//				+ getResources()
+//						.getString(R.string.account_login_legal_private)
+//				+ "</a>"
+//				+ getResources().getString(R.string.account_login_legal_dot);
 //		Spanned legal = Html.fromHtml("<a href=\"htp://blog.csdn.net/forlong401\">×Ô¶¨Òå</a>");
-		mLegalTextView.setText(legal);
+//		mLegalTextView.setText(legal);
+	    
 		mLegalTextView.setMovementMethod(LinkMovementMethod.getInstance());
 		CharSequence text = mLegalTextView.getText();
 		if (text instanceof Spannable) {
@@ -226,6 +254,11 @@ public class AccountLoginActivity extends Activity {
 			}
 			mLegalTextView.setText(style);
 		}
+		
+		
+//		Linkify.addLinks(mLegalTextView, Linkify.ALL);
+//		mLegalTextView.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+//		mLegalTextView.getPaint().setAntiAlias(true);
 		mSharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(AccountLoginActivity.this);
 		String account = mSharedPreferences.getString(

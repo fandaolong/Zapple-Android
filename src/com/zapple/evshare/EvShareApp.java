@@ -1,45 +1,13 @@
 /*
- * Copyright (C) 2012 Li Cong, forlong401@163.com
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright (C) 2012 Zapple, www.zapple.com.cn
  */
 package com.zapple.evshare;
 
-//import com.baidu.mapapi.BMapManager;
-//import com.baidu.mapapi.MKEvent;
-//import com.baidu.mapapi.MKGeneralListener;
-
 import com.baidu.mapapi.BMapManager;
-import com.baidu.mapapi.GeoPoint;
-import com.baidu.mapapi.LocationListener;
-import com.baidu.mapapi.MKAddrInfo;
-import com.baidu.mapapi.MKBusLineResult;
-import com.baidu.mapapi.MKDrivingRouteResult;
 import com.baidu.mapapi.MKEvent;
 import com.baidu.mapapi.MKGeneralListener;
-import com.baidu.mapapi.MKGeocoderAddressComponent;
-import com.baidu.mapapi.MKPoiInfo;
-import com.baidu.mapapi.MKPoiResult;
-import com.baidu.mapapi.MKSearch;
-import com.baidu.mapapi.MKSearchListener;
-import com.baidu.mapapi.MKSuggestionResult;
-import com.baidu.mapapi.MKTransitRouteResult;
-import com.baidu.mapapi.MKWalkingRouteResult;
-import com.zapple.evshare.ui.PilesSiteMapActivity.MySearchListener;
 
 import android.app.Application;
-import android.content.ContentValues;
-import android.location.Location;
 import android.util.Log;
 import android.widget.Toast;
 
