@@ -20,11 +20,26 @@ package com.zapple.evshare;
 //import com.baidu.mapapi.MKGeneralListener;
 
 import com.baidu.mapapi.BMapManager;
+import com.baidu.mapapi.GeoPoint;
+import com.baidu.mapapi.LocationListener;
+import com.baidu.mapapi.MKAddrInfo;
+import com.baidu.mapapi.MKBusLineResult;
+import com.baidu.mapapi.MKDrivingRouteResult;
 import com.baidu.mapapi.MKEvent;
 import com.baidu.mapapi.MKGeneralListener;
+import com.baidu.mapapi.MKGeocoderAddressComponent;
+import com.baidu.mapapi.MKPoiInfo;
+import com.baidu.mapapi.MKPoiResult;
+import com.baidu.mapapi.MKSearch;
+import com.baidu.mapapi.MKSearchListener;
+import com.baidu.mapapi.MKSuggestionResult;
+import com.baidu.mapapi.MKTransitRouteResult;
+import com.baidu.mapapi.MKWalkingRouteResult;
+import com.zapple.evshare.ui.PilesSiteMapActivity.MySearchListener;
 
 import android.app.Application;
 import android.content.ContentValues;
+import android.location.Location;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -40,7 +55,6 @@ public class EvShareApp extends Application {
 	private static EvShareApp sZappleRentalApp = null;
 	//百度MapAPI的管理类
 	private static BMapManager sBMapManager = null;
-	
 	// 授权Key
 	// TODO: 请输入您的Key,
 	// 申请地址：http://dev.baidu.com/wiki/static/imap/key/
@@ -63,7 +77,7 @@ public class EvShareApp extends Application {
 //		if (sBMapManager != null) {
 //			sBMapManager.destroy();
 //			sBMapManager = null;
-//		}    			
+//		}    		
     }
     
     @Override

@@ -131,7 +131,7 @@ public class ManagementTabActivity extends TabActivity implements
         setupAccountManagementTab();
         setupMemberManagementTab();
 
-//        setCurrentTab(intent);
+        setCurrentTab(intent);
 //        GetLoactionTask task = new GetLoactionTask();
 //        task.execute();
         mLoactionTextView.setText(locationLabel == null ? "" : locationLabel);
@@ -257,11 +257,11 @@ public class ManagementTabActivity extends TabActivity implements
      */
     private void setCurrentTab(Intent intent) {
         // Dismiss menu provided by any children activities
-        Activity activity = getLocalActivityManager().
-                getActivity(mTabHost.getCurrentTabTag());
-        if (activity != null) {
-            activity.closeOptionsMenu();
-        }
+//        Activity activity = getLocalActivityManager().
+//                getActivity(mTabHost.getCurrentTabTag());
+//        if (activity != null) {
+//            activity.closeOptionsMenu();
+//        }
 
         // Tell the children activities that they should ignore any possible saved
         // state and instead reload their state from the parent's intent
@@ -316,10 +316,10 @@ public class ManagementTabActivity extends TabActivity implements
 //			}
 //		}
     	
-        Activity activity = getLocalActivityManager().getActivity(tabId);
-        if (activity != null) {
-            activity.onWindowFocusChanged(true);
-        }
+//        Activity activity = getLocalActivityManager().getActivity(tabId);
+//        if (activity != null) {
+//            activity.onWindowFocusChanged(true);
+//        }
     }
     
     // private method do action section

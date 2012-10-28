@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  Copyright (C) 2012 Li Cong, forlong401@163.com
+<!--
+      Copyright (C) 2012 Li Cong, forlong401@163.com
       
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -12,39 +13,54 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
- -->
+-->
 
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/tabhost"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent" >
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
         <TabWidget
             android:id="@android:id/tabs"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="#1e456f"/>
+            android:background="#1e456f" />
 
-        <FrameLayout android:id="@android:id/tabcontent"
+        <FrameLayout
+            android:id="@android:id/tabcontent"
             android:layout_width="fill_parent"
             android:layout_height="0dip"
-            android:layout_weight="1"/>
-        
-        <TextView 
-            android:id="@+id/location_text_view"
+            android:layout_weight="1" />
+
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="@dimen/bottom_location_item_height"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="@string/city_label"
-            android:textColor="#ffffff"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:background="@drawable/down_bar_bg"/>
+            android:background="@drawable/down_bar_bg" >
+
+            <TextView
+                android:id="@+id/location_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/bottom_location_item_height"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:text="@string/city_label"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#ffffff" />
+
+            <ImageView
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@id/location_text_view"
+                android:src="@drawable/location_dot" />
+        </RelativeLayout>
     </LinearLayout>
+
 </TabHost>

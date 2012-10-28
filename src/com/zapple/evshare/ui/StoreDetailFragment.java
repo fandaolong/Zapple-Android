@@ -121,7 +121,7 @@ public class StoreDetailFragment extends Fragment {
                 case MSG_QUERY_SUCCESS: {
             		mChoiceVehicleModelSpinner.setAdapter(new ArrayAdapter<String>(
             				mActivity, 
-            				android.R.layout.simple_spinner_item, 
+            				R.layout.simple_spinner_item, 
             				mModelList));
             		mChoiceVehicleModelSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 						@Override
@@ -137,7 +137,7 @@ public class StoreDetailFragment extends Fragment {
             		});
             		mChoiceVehicleBrandSpinner.setAdapter(new ArrayAdapter<String>(
             				mActivity, 
-            				android.R.layout.simple_spinner_item, 
+            				R.layout.simple_spinner_item, 
             				mBrandList));       
             		mChoiceVehicleBrandSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 						@Override
@@ -194,8 +194,8 @@ public class StoreDetailFragment extends Fragment {
                 }    
                 case MSG_ADD_FAVORITE_VEHICLE: {
                 	doActionFavoriteVehicle((String)msg.obj);
-                    Toast.makeText(mActivity, R.string.add_favorite_success_label, 
-                    		Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mActivity, R.string.add_favorite_success_label, 
+//                    		Toast.LENGTH_SHORT).show();
                     break;
                 }      
                 case MSG_ADD_FAVORITE_VEHICLE_SUCCESS: {
@@ -678,6 +678,7 @@ public class StoreDetailFragment extends Fragment {
         		msg.what = MSG_ADD_FAVORITE_VEHICLE_SUCCESS;
 			} else {
 				msg.what = MSG_ADD_FAVORITE_VEHICLE_FAILURE;
+				msg.obj = result;
 				if (DEBUG) Log.d(TAG, "FavoriteVehicleRunner->FavoriteVehicle failure.");
 			}
 			if (mFavoriteVehicleDialog != null && mFavoriteVehicleDialog.isShowing()) {

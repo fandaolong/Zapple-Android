@@ -20,12 +20,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.zapple.evshare.R;
+import com.zapple.evshare.data.LoginResult;
+import com.zapple.evshare.data.PersonalInfo;
+import com.zapple.evshare.data.Score;
+import com.zapple.evshare.transaction.WebServiceController;
 
 import android.app.Activity;
-import android.content.ActivityNotFoundException;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,17 +44,62 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * This activity providers member management feature.
  */
 public class MemberManagementActivity extends Activity {
-	private static final String TAG = "MemberManagementActivity";
+	private static final String TAG = MemberManagementActivity.class.getSimpleName();
 	private static final boolean DEBUG = true;
+	private static final int LIST_QUERY_TOKEN = 9601;
+    
+	private static final int QUERY_SUCCESS = 0;
+	private static final int QUERY_FAILURE = 1;
 	
+	private Context mContext;
+	private SharedPreferences mSharedPreferences;
 	private ListView mListView;
-	private List<String> mListInfo;
+	private View mFooterView;
+	private TextView mFooterTextView;
 	
+	private List<Score> mScoreList;
+    private ProgressDialog mQueryScoreDialog;
+    private Thread mQueryScoreThread = null;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(final Message msg) {
+            switch (msg.what) {
+                case QUERY_SUCCESS: {
+                	mListView.setAdapter(new ScoreListArrayAdapter(mContext));
+//                	mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//						@Override
+//						public void onItemClick(AdapterView<?> arg0, View arg1,
+//								int arg2, long arg3) {
+//							if (DEBUG) Log.d(TAG, "setOnItemClickListener.arg2." + arg2);
+//							ScoreListItem listItem = (ScoreListItem) arg1;
+//							doActionEnterOrderDetail(listItem.getListItem().getId());							
+//						}                		
+//                	});
+                     Toast.makeText(mContext, R.string.query_score_success_label, 
+                    		 Toast.LENGTH_SHORT).show();  
+                    break;
+                }
+                case QUERY_FAILURE: {
+                	String failureReason;
+                	if (msg.obj == null) {
+                		failureReason = getString(R.string.query_score_failure_label);
+                	} else {
+                		failureReason = (String) msg.obj;
+                	}
+                    Toast.makeText(mContext, failureReason, 
+                    		Toast.LENGTH_SHORT).show();
+                    break;
+                }
+            }
+        }
+    };
+    
     /**
      * Called when the activity is starting.  This is where most initialization
      * should go: calling {@link #setContentView(int)} to inflate the
@@ -63,37 +116,29 @@ public class MemberManagementActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.member_management_layout);
 		
+		mContext = this;
+		mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
 		// find view section
 		mListView = (ListView) findViewById(R.id.list_view);
 		mListView.setEmptyView((TextView) findViewById(R.id.empty));
 
-		mListInfo = new ArrayList<String>();
-		mListInfo.add(getString(R.string.score_label));
-		mListInfo.add(getString(R.string.personal_info_label));
-		mListInfo.add(getString(R.string.modify_password_label));
-		mListInfo.add(getString(R.string.member_regulation_label));
-		mListInfo.add(getString(R.string.complaint_suggestion_label));
-		
-		mListView.setAdapter(new ListAdapter(this));
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				if (DEBUG) Log.d(TAG, "setOnItemClickListener.arg2." + arg2);
-				if (arg2 == 0) {
-					doActionEnterScore();
-				} else if (arg2 == 1) {
-					doActionEnterPersonalInfo();
-				} else if (arg2 == 2) {
-					doActionEnterModifyPassword();
-				} else if (arg2 == 3) {
-					doActionEnterMemberRegulation();
-				} else if (arg2 == 4) {		
-					doActionEnterComplaintSuggestion();
-				} else {
-					
-				}
 			}
-		});				
+		});		
+		TextView memberName = (TextView) findViewById(R.id.member_name_text_view);
+		TextView memberRank = (TextView) findViewById(R.id.member_rank_text_view);
+		TextView memberScore = (TextView) findViewById(R.id.member_score_text_view);
+		memberName.setText(mSharedPreferences.getString(PersonalInfo.PERSONAL_INFO_NAME_KEY, ""));
+		memberRank.setText(mSharedPreferences.getString(PersonalInfo.PERSONAL_INFO_USER_RANK_KEY, ""));
+		memberScore.setText(String.valueOf(mSharedPreferences.getLong(LoginResult.LOGIN_RESULT_TOTAL_SCORES_KEY, 0)));
+		
+		mFooterView = getLayoutInflater().inflate(R.layout.load_more_list_footer_view, null);
+		mFooterTextView = (TextView) mFooterView.findViewById(R.id.footer_text);
+		mListView.addFooterView(mFooterView, null, true);		
+		doActionQueryScore();
 	}
 
     /**
@@ -201,85 +246,122 @@ public class MemberManagementActivity extends Activity {
 	
 
 	// private method do action section	
-	private void doActionEnterScore() {
-//		Intent intent = new Intent(MemberManagementActivity.this, ScoreActivity.class);
-//		try {
-//			startActivity(intent);
-//		} catch (ActivityNotFoundException e) {
-//			Log.e(TAG, "doActionEnterScore->", e);
-//		}		
-	}	
-	
-	private void doActionEnterPersonalInfo() {
-//		Intent intent = new Intent(MemberManagementActivity.this, PersonalInfoActivity.class);
-//		try {
-//			startActivity(intent);
-//		} catch (ActivityNotFoundException e) {
-//			Log.e(TAG, "doActionEnterPersonalInfo->", e);
-//		}		
-	}	
-		
-	private void doActionEnterModifyPassword() {
-//		Intent intent = new Intent(MemberManagementActivity.this, ModifyPasswordActivity.class);
-//		try {
-//			startActivity(intent);
-//		} catch (ActivityNotFoundException e) {
-//			Log.e(TAG, "doActionEnterModifyPassword->", e);
-//		}		
-	}
-	
-	private void doActionEnterMemberRegulation() {
-//		Intent intent = new Intent(MemberManagementActivity.this, MemberRegulationActivity.class);
-//		try {
-//			startActivity(intent);
-//		} catch (ActivityNotFoundException e) {
-//			Log.e(TAG, "doActionEnterMemberRegulation->", e);
-//		}		
-	}	
-	
-	private void doActionEnterComplaintSuggestion() {
-//		Intent intent = new Intent(MemberManagementActivity.this, ComplaintSuggestionActivity.class);
-//		try {
-//			startActivity(intent);
-//		} catch (ActivityNotFoundException e) {
-//			Log.e(TAG, "doActionEnterComplaintSuggestion->", e);
-//		}		
-	}
-	
-	// private method section
-
-	// private class section
-    private class ListAdapter extends BaseAdapter {
-    	private Context mContext;
-    	
-        public ListAdapter(Context context) {
-            mContext = context;
-        }
-
-        public int getCount() {
-            return mListInfo.size();
-        }
-
-        public Object getItem(int position) {
-            return position;
-        }
-
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            RelativeLayout tv;
-            if (convertView == null) {
-                tv = (RelativeLayout) LayoutInflater.from(mContext).inflate(
-                        R.layout.member_management_list_item, parent, false);
-            } else {
-                tv = (RelativeLayout) convertView;
+    private void doActionQueryScore() {
+		if (mQueryScoreDialog != null && mQueryScoreDialog.isShowing()) {
+			mQueryScoreDialog.dismiss();
+		}    	
+        mQueryScoreDialog = new ProgressDialog(this);
+        mQueryScoreDialog.setTitle(R.string.query_score_label);
+        mQueryScoreDialog.setMessage(getString(R.string.quering_score_prompt));
+        mQueryScoreDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            public void onDismiss(DialogInterface dialog) {
+                if (mQueryScoreThread != null && mQueryScoreThread.isInterrupted()) {
+                    // indicate thread should cancel
+                }
             }
-            String title = mListInfo.get(position);
-            TextView titleTextView = (TextView) tv.findViewById(R.id.title_text_view);
-            titleTextView.setText(title);
-            return tv;
-        }        
+        });
+        mQueryScoreDialog.setOwnerActivity(this);
+        mQueryScoreDialog.show();
+
+        //TODO: do action queryScore
+        QueryScoreRunner queryScoreRunner = new QueryScoreRunner();
+        mQueryScoreThread = new Thread(queryScoreRunner);
+        mQueryScoreThread.start();
+    }	
+	// private method section
+    private void setFooterViewVisible(boolean isVisible) {
+    	if (isVisible) {
+    		mFooterTextView.setText(R.string.load_more_prompt);
+    	} else {
+    		mFooterTextView.setText(R.string.loaded_all_prompt);
+    	}
+//    	mFooterView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
+    
+	// private class section
+	private class QueryScoreRunner implements Runnable {
+
+		public void run() {
+			// query score action
+			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+	        String account = sharedPreferences.getString(LoginResult.LOGIN_RESULT_ACCOUNT_KEY, "");
+	        String password = sharedPreferences.getString(LoginResult.LOGIN_RESULT_PASSWORD_KEY, "");			
+			String startIndex = "0";
+			String endIndex = "100";
+			try {
+				mScoreList = WebServiceController.queryScores(account, password, startIndex, endIndex);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+			
+			// TODO: load more ?
+        	if (mScoreList != null && mScoreList.size() == 100) {
+        		setFooterViewVisible(true);
+        	} else {
+        		setFooterViewVisible(false);
+        	}			
+			if (DEBUG) Log.d(TAG, "QueryScoreRunner->" + mScoreList);
+			
+			// Deal with upload result
+			Message msg = new Message();
+			if (mScoreList != null) {
+				if (DEBUG) Log.d(TAG, "QueryScoreRunner->queryScore success");
+        		msg.what = QUERY_SUCCESS;
+			} else {
+				msg.what = QUERY_FAILURE;
+				if (DEBUG) Log.d(TAG, "QueryScoreRunner->queryScore failure.");
+			}
+			if (mQueryScoreDialog != null && mQueryScoreDialog.isShowing()) {
+				mQueryScoreDialog.dismiss();
+			}
+			mHandler.sendMessage(msg);
+		}		
+	}
+	
+	private class ScoreListArrayAdapter extends BaseAdapter {
+		private TextView textView1;
+		private LayoutInflater inflater;
+
+		public ScoreListArrayAdapter(Context context) {
+			inflater = LayoutInflater.from(context);
+		}
+		
+		public void setList(List<Score> list)
+		{
+			mScoreList = list;
+		}
+		
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return mScoreList.size();
+		}
+
+		@Override
+		public Object getItem(int position) {
+			// TODO Auto-generated method stub
+			return position;
+		}
+
+		@Override
+		public long getItemId(int position) {
+			// TODO Auto-generated method stub
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			if (convertView == null) {
+				// 将自定义布局 －> View
+				convertView = inflater.inflate(R.layout.score_list_item, null);
+				// 获取元素
+			}
+			ScoreListItem headerView = (ScoreListItem) convertView;
+			ScoreItem item = new ScoreItem(mScoreList.get(position));
+	        headerView.bind(mContext, item);
+
+			return convertView;
+		}
+	} 	
 }

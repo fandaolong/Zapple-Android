@@ -63,7 +63,7 @@
         android:layout_below="@id/password_edit_text"
         android:layout_margin="10dp"
         android:minWidth="60dip"
-        android:singleLine="true"
+        android:autoLink="all"
         android:text="@string/account_login_legal"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

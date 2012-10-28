@@ -26,7 +26,7 @@ import android.os.Parcelable;
 public final class Store implements Parcelable {
     private static final String TAG = "Store";
     private static final boolean DEBUG = true;
-    private static final String AUTHORITY = "com.zapple.rental.provider.store";
+    private static final String AUTHORITY = "com.zapple.evshare.provider.store";
     
     // Constructor
     public Store() {

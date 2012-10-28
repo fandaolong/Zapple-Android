@@ -28,13 +28,15 @@
             android:id="@+id/choice_vehicle_model_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="6dip"/>
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"/>
         
         <Spinner 
             android:id="@+id/choice_vehicle_brand_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="6dip"/>
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"/>
     </LinearLayout>
  
     <Button 
@@ -43,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="5dip"
-        android:layout_marginTop="30dip"
+        android:layout_marginTop="10dip"
         android:text="@string/filter_label"
         android:enabled="false"
         android:textColor="@android:color/white"

@@ -265,7 +265,11 @@
 	
 	<string name="account_login_email_hint">Email</string>
 	<string name="account_login_password_hint">Password</string>
-	<string name="account_login_legal">You agree the service and private legal for member.</string>
+	<string name="account_login_legal_service">the service for member </string>
+	<string name="account_login_legal_private"> private legal for member</string>
+	<string name="account_login_legal_and">and</string>
+	<string name="account_login_legal_dot">.</string>	
+	<string name="account_login_legal">You agree </string>
 	<string name="account_login_push_check_label">Receive ZAPPLE news and update service</string>
 	
 	<string name="account_register_title">Your Name</string>
@@ -309,4 +313,14 @@
 	<string name="order_check_added_fee_label">Added Fee:</string>
 	<string name="order_check_other_fee_label">Other Fee:</string>
 	<string name="order_check_total_amount_label">Total Amount:</string>		
+	
+	<string name="location_nearby_label">Nearby  </string>	
+	
+	<string name="score_list_item_id_label">ID:</string>
+	<string name="score_list_item_description_label">Description(Score):</string>
+	<string name="score_list_item_date_label">Reservation Date:</string>
+	<string name="score_list_item_paid_channel_type_label">Paid Channel-Type:</string>		
+	<string name="member_management_name_label">Member Name:</string>
+	<string name="member_management_rank_label">Member Rank:</string>
+	<string name="member_management_score_label">Member Score:</string>
 </resources>

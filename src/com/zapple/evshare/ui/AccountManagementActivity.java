@@ -90,15 +90,16 @@ public class AccountManagementActivity extends Activity {
 //						doActionEnterOrderDetail(listItem.getListItem().getId());							
 //					}                		
 //            	});
-                 Toast.makeText(mContext, R.string.query_order_success_label, 
+                 Toast.makeText(mContext, R.string.query_account_success_label, 
                 		 Toast.LENGTH_SHORT).show();  
                 break;
             }
             case QUERY_FAILURE: {
             	String failureReason;
-            	failureReason = getString(R.string.query_order_failure_label);
             	if (msg.obj != null) {
-            		failureReason = failureReason + "--" + (String) msg.obj;
+            		failureReason = (String) msg.obj;
+            	} else {
+            		failureReason = getString(R.string.query_account_failure_label);
             	}
                 Toast.makeText(mContext, failureReason, 
                 		Toast.LENGTH_SHORT).show();
@@ -144,19 +145,16 @@ public class AccountManagementActivity extends Activity {
 				
 			}
 		});
-		View headerView = getLayoutInflater().inflate(R.layout.account_management_header_view, null);
-		TextView cardId = (TextView) headerView.findViewById(R.id.card_id_text_view);
+		TextView cardId = (TextView) findViewById(R.id.card_id_text_view);
 		cardId.setText(mCardId);
 		// TODO: query account balance from server instead of "1600"
 		mAccountBalance = "гд" + "1600" + getResources().getString(R.string.account_management_yuan_label);
-		TextView accountBalanceTextView = (TextView) headerView.findViewById(R.id.account_balance_text_view);
+		TextView accountBalanceTextView = (TextView) findViewById(R.id.account_balance_text_view);
 		accountBalanceTextView.setText(mAccountBalance);
-		mListView.addHeaderView(headerView, null, true);	
 		
 		mFooterView = getLayoutInflater().inflate(R.layout.load_more_list_footer_view, null);
 		mFooterTextView = (TextView) mFooterView.findViewById(R.id.footer_text);
 		mListView.addFooterView(mFooterView, null, true);
-		doActionQueryOrder();
 	}
 
     /**
@@ -208,6 +206,7 @@ public class AccountManagementActivity extends Activity {
 	public void onResume() {
 		if (DEBUG) Log.d(TAG, "onResume");
 		super.onResume();
+		doActionQueryOrder();
 	}
 
     /**
@@ -269,8 +268,8 @@ public class AccountManagementActivity extends Activity {
 			mQueryOrderDialog.dismiss();
 		}    	
         mQueryOrderDialog = new ProgressDialog(this);
-        mQueryOrderDialog.setTitle(R.string.query_order_label);
-        mQueryOrderDialog.setMessage(getString(R.string.quering_order_prompt));
+        mQueryOrderDialog.setTitle(R.string.query_account_label);
+        mQueryOrderDialog.setMessage(getString(R.string.quering_account_prompt));
         mQueryOrderDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             public void onDismiss(DialogInterface dialog) {
                 if (mQueryOrderThread != null && mQueryOrderThread.isInterrupted()) {
@@ -294,14 +293,14 @@ public class AccountManagementActivity extends Activity {
     	} else {
     		mFooterTextView.setText(R.string.loaded_all_prompt);
     	}
-    	mFooterView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+//    	mFooterView.setVisibility(isVisible ? View.VISIBLE : View.GONE);
     }
 	
 	// private class section
 	private class QueryOrderRunner implements Runnable {
 
 		public void run() {
-			// query order action
+			// query account action
 			SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
 	        String account = sharedPreferences.getString(LoginResult.LOGIN_RESULT_ACCOUNT_KEY, "");
 	        String password = sharedPreferences.getString(LoginResult.LOGIN_RESULT_PASSWORD_KEY, "");

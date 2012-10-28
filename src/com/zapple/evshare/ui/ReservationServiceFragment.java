@@ -95,7 +95,7 @@ public class ReservationServiceFragment extends Fragment {
 			if (DEBUG) Log.e(TAG, "handleMessage.what." + msg.what);
 			switch (msg.what) {
 	            case QUERY_SUCCESS: {
-	            	mCityAdapter = new ArrayAdapter(mActivity, android.R.layout.simple_spinner_item, mCityList);
+	            	mCityAdapter = new ArrayAdapter(mActivity, R.layout.simple_spinner_item, mCityList);
 //	            	loadData();
 	                Toast.makeText(mActivity, R.string.get_store_success_label, 
 	               		 Toast.LENGTH_SHORT).show();
@@ -303,7 +303,7 @@ public class ReservationServiceFragment extends Fragment {
 			public void onClick(View v) {
 				if (DEBUG) Log.d(TAG, "mStoreTextView." + mStoreNameList);
 				if (mStoreNameList != null && mStoreNameList.size() > 0) {
-					mStoreAdapter = new ArrayAdapter(mActivity, android.R.layout.simple_spinner_item, mStoreNameList);
+					mStoreAdapter = new ArrayAdapter(mActivity, R.layout.simple_spinner_item, mStoreNameList);
 					AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
 					builder.setTitle(R.string.get_store_label)
 					.setIcon(R.drawable.ic_car_default)

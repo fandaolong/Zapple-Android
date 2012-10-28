@@ -65,7 +65,7 @@
 	<string name="dial_label">"拨号"</string>
 	
 	<string name="back_label">"返回"</string>
-	<string name="empty_prompt">"空"</string>
+	<string name="empty_prompt">"没有记录"</string>
 	<string name="favorite_label">"收    藏"</string>
 	<string name="reservation_label">"预    订"</string>
 	
@@ -201,6 +201,11 @@
 	<string name="query_order_label">"查询订单"</string>
 	<string name="quering_order_prompt">"正在查询订单"</string>
 	
+	<string name="query_account_success_label">"成功查询账户信息"</string>
+	<string name="query_account_failure_label">"查询账户信息失败"</string>
+	<string name="query_account_label">"查询账户信息"</string>
+	<string name="quering_account_prompt">"正在查询账户信息"</string>	
+	
 	<string name="query_score_success_label">"成功查询积分"</string>
 	<string name="query_score_failure_label">"查询积分失败"</string>
 	<string name="query_score_label">"查询积分"</string>
@@ -265,9 +270,13 @@
 	<string name="account_setup_prompt">"你希望登录现有账户或者注册一个新账户？"</string>
 	<string name="account_setup_title">"登录ZAPPLE账户"</string>
 	
-	<string name="account_login_email_hint">"邮    箱"</string>
-	<string name="account_login_password_hint">"密    码"</string>
-	<string name="account_login_legal">"您同意ZAPPLE会员服务条款和隐私保护策略。"</string>
+	<string name="account_login_email_hint">"邮箱"</string>
+	<string name="account_login_password_hint">"密码"</string>
+	<string name="account_login_legal_service">"会员服务条款"</string>
+	<string name="account_login_legal_private">"隐私保护策略"</string>
+	<string name="account_login_legal">"您同意ZAPPLE"</string>
+	<string name="account_login_legal_and">"和"</string>
+	<string name="account_login_legal_dot">"。"</string>
 	<string name="account_login_push_check_label">"接收ZAPPLE新闻和服务更新"</string>
 	
 	<string name="account_register_title">"您的姓名"</string>
@@ -311,4 +320,14 @@
 	<string name="order_check_added_fee_label">"增值服务："</string>
 	<string name="order_check_other_fee_label">"其他费用："</string>
 	<string name="order_check_total_amount_label">"订单总额："</string>
+	
+	<string name="location_nearby_label">"靠近    "</string>
+	
+	<string name="score_list_item_id_label">"流水号："</string>
+	<string name="score_list_item_description_label">"事件内容（积分）："</string>
+	<string name="score_list_item_date_label">"预定时间："</string>
+	<string name="score_list_item_paid_channel_type_label">"资金支付渠道-类型："</string>	
+	<string name="member_management_name_label">"会员名："</string>
+	<string name="member_management_rank_label">"会员级别："</string>
+	<string name="member_management_score_label">"会员积分："</string>
 </resources>

@@ -113,9 +113,11 @@ public class OrderManagementActivity extends Activity {
                 }
                 case QUERY_FAILURE: {
                 	String failureReason;
-                	failureReason = getString(R.string.query_order_failure_label);
+                	
                 	if (msg.obj != null) {
-                		failureReason = failureReason + "--" + (String) msg.obj;
+                		failureReason = (String) msg.obj;
+                	} else {
+                		failureReason = getString(R.string.query_order_failure_label);
                 	}
                     Toast.makeText(mContext, failureReason, 
                     		Toast.LENGTH_SHORT).show();
@@ -169,7 +171,6 @@ public class OrderManagementActivity extends Activity {
 			}
 		});				
 		mBackgroundQueryHandler = new BackgroundQueryHandler(getContentResolver());	
-		doActionQueryOrder();
 	}
 
     /**
@@ -221,6 +222,7 @@ public class OrderManagementActivity extends Activity {
 	public void onResume() {
 		if (DEBUG) Log.d(TAG, "onResume");
 		super.onResume();
+		doActionQueryOrder();
 	}
 
     /**

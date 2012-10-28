@@ -32,11 +32,12 @@
 	        android:layout_margin="30dip"
 	        android:stretchColumns="1">
 	        
-	        <TableRow>
+	        <TableRow
+	            android:layout_marginTop="10dip">
 		        <TextView 
 		            android:layout_width="wrap_content"
 		            android:layout_height="match_parent"
-		            android:layout_margin="10dip"
+		            android:layout_margin="5dip"
 		            android:gravity="center_vertical"
 		            android:singleLine="true"
 		            android:text="@string/city_label"
@@ -46,7 +47,7 @@
 		        <TextView 
 		            android:id="@+id/city_text_view"
 		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
+		            android:layout_height="48dp"
 		            android:singleLine="true"
 		            android:drawableStart="@drawable/my_location_selector"
 		            android:background="@drawable/rightangle_border_selector"
@@ -57,11 +58,11 @@
 			</TableRow>       
 			
 	        <TableRow
-	            android:layout_marginTop="30dip">
+	            android:layout_marginTop="10dip">
 		        <TextView 
 		            android:layout_width="wrap_content"
 		            android:layout_height="match_parent"
-		            android:layout_margin="10dip"
+		            android:layout_margin="5dip"
 		            android:gravity="center_vertical"
 		            android:singleLine="true"
 		            android:text="@string/store_label"
@@ -71,7 +72,7 @@
 		        <TextView 
 		            android:id="@+id/store_text_view"
 		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
+		            android:layout_height="48dp"
 		            android:singleLine="true"
 		            android:drawableStart="@drawable/ic_car_selector"
 		            android:background="@drawable/rightangle_border_selector"
@@ -82,11 +83,11 @@
 			</TableRow>   
 			
 	        <TableRow
-	            android:layout_marginTop="30dip">
+	            android:layout_marginTop="10dip">
 		        <TextView 
 		            android:layout_width="wrap_content"
 		            android:layout_height="match_parent"
-		            android:layout_margin="10dip"
+		            android:layout_margin="5dip"
 		            android:gravity="center_vertical"
 		            android:singleLine="true"
 		            android:text="@string/date_label"
@@ -96,7 +97,7 @@
 		        <TextView 
 		            android:id="@+id/date_text_view"
 		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
+		            android:layout_height="48dp"
 		            android:singleLine="true"
 		            android:drawableStart="@drawable/ic_calendar_selector"
 		            android:background="@drawable/rightangle_border_selector"
@@ -107,11 +108,11 @@
 			</TableRow>       
 			
 	        <TableRow
-	            android:layout_marginTop="30dip">
+	            android:layout_marginTop="10dip">
 		        <TextView 
 		            android:layout_width="wrap_content"
 		            android:layout_height="match_parent"
-		            android:layout_margin="10dip"
+		            android:layout_margin="5dip"
 		            android:gravity="center_vertical"
 		            android:singleLine="true"
 		            android:text="@string/time_label"
@@ -121,7 +122,7 @@
 		        <TextView 
 		            android:id="@+id/time_text_view"
 		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
+		            android:layout_height="48dp"
 		            android:singleLine="true"
 		            android:drawableStart="@drawable/ic_clock_selector"
 		            android:background="@drawable/rightangle_border_selector"

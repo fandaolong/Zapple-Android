@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -33,6 +34,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.baidu.mapapi.BMapManager;
+import com.baidu.mapapi.GeoPoint;
+import com.baidu.mapapi.LocationListener;
+import com.baidu.mapapi.MKAddrInfo;
+import com.baidu.mapapi.MKBusLineResult;
+import com.baidu.mapapi.MKDrivingRouteResult;
+import com.baidu.mapapi.MKGeocoderAddressComponent;
+import com.baidu.mapapi.MKPoiInfo;
+import com.baidu.mapapi.MKPoiResult;
+import com.baidu.mapapi.MKSearch;
+import com.baidu.mapapi.MKSearchListener;
+import com.baidu.mapapi.MKSuggestionResult;
+import com.baidu.mapapi.MKTransitRouteResult;
+import com.baidu.mapapi.MKWalkingRouteResult;
+import com.zapple.evshare.EvShareApp;
 import com.zapple.evshare.R;
 import com.zapple.evshare.util.Constants;
 
@@ -47,6 +63,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -88,15 +105,53 @@ public class MainTabActivity extends TabActivity implements
 	private TabSpec mHelptabSpec;
     private String[] mTagSpec;
     private SharedPreferences mSharedPreferences;
-    private final BroadcastReceiver mTitleChangeReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mChangeReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if (Constants.TITLE_CHANGE_ACTION.equals(intent.getAction())) {
 				doActionSetTitle(
 						intent.getStringExtra(Constants.TITLE_CHANGE_EXTRA));
+			} else if (Constants.LOCATION_CHANGE_ACTION.equals(intent.getAction())) {
+				doActionSetLocation(intent.getStringExtra(Constants.LOCATION_CHANGE_EXTRA));
 			}
 		}
     };
+    
+	private MKSearch mMKSearch;
+	private MKGeocoderAddressComponent mMKGeocoderAddressComponent;
+    /** 记录当前经纬度的MAP*/
+    private HashMap<String, Double> mCurLocation = new HashMap<String, Double>();
+    /** 注册定位事件 */
+    private LocationListener mLocationListener = new LocationListener() {
+
+        @Override
+        public void onLocationChanged(Location location) {
+            // TODO Auto-generated method stub
+            if (location != null) {
+                try {
+                    int longitude = (int) (1e6 * location.getLongitude());
+                    int latitude = (int) (1e6 * location.getLatitude());
+                    if (DEBUG) Log.d(TAG, "onLocationChanged.longitude." + longitude + ", latitude." + latitude);
+                    /** 保存当前经纬度 */
+                    if (mCurLocation.get(Constants.LONGITUDE_KEY) == null || mCurLocation.get(Constants.LATITUDE_KEY) == null || mCurLocation.get(Constants.LONGITUDE_KEY) != location.getLongitude() || mCurLocation.get(Constants.LATITUDE_KEY) != location.getLatitude()) {
+                    	mCurLocation.put(Constants.LONGITUDE_KEY, location.getLongitude());
+                    	mCurLocation.put(Constants.LATITUDE_KEY, location.getLatitude());
+                        /** 查询该经纬度值所对应的地址位置信息 */
+                        mMKSearch.reverseGeocode(new GeoPoint(latitude, longitude));                    	
+                    }
+//                    mCurLocation.put("longitude", location.getLongitude());
+//                    mCurLocation.put("latitude", location.getLatitude());
+
+//                    GeoPoint point = new GeoPoint(latitude, longitude);
+//                    mMapView.getController().setCenter(point);
+//                    /** 查询该经纬度值所对应的地址位置信息 */
+//                    mMKSearch.reverseGeocode(new GeoPoint(latitude, longitude));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };    
     
     @Override
     protected void onCreate(Bundle icicle) {
@@ -134,16 +189,44 @@ public class MainTabActivity extends TabActivity implements
         setupMyZappleTab();
         setupHelpTab();
 
-        setCurrentTab(intent);
-        GetLoactionTask task = new GetLoactionTask();
-        task.execute();
+//        setCurrentTab(intent);
+//        GetLoactionTask task = new GetLoactionTask();
+//        task.execute();
         
-        registerReceiver(mTitleChangeReceiver, new IntentFilter(Constants.TITLE_CHANGE_ACTION));
+        registerReceiver(mChangeReceiver, new IntentFilter(Constants.TITLE_CHANGE_ACTION));
+        registerReceiver(mChangeReceiver, new IntentFilter(Constants.LOCATION_CHANGE_ACTION));
+        
+        EvShareApp app = EvShareApp.getApplication();
+        mMKSearch = new MKSearch();  
+        mMKSearch.init(app.getBMapManager(), new MySearchListener()); 
     }
 
+    /**
+     * Called after {@link #onRestoreInstanceState}, {@link #onRestart}, or
+     * {@link #onPause}, for your activity to start interacting with the user.
+     * This is a good place to begin animations, open exclusive-access devices
+     * (such as the camera), etc.
+     */	
+	@Override
+	public void onResume() {
+		if (DEBUG) Log.d(TAG, "onResume");
+		EvShareApp app = EvShareApp.getApplication();
+		BMapManager mapManager = app.getBMapManager();
+		mapManager.getLocationManager().requestLocationUpdates(mLocationListener);
+		mapManager.start();		
+		super.onResume();
+	}    
+    
     @Override
     protected void onPause() {
     	if (DEBUG) Log.d(TAG, "onPause");
+		if (DEBUG) Log.d(TAG, "onPause");
+		EvShareApp app = EvShareApp.getApplication();
+		BMapManager mapManager = app.getBMapManager();
+		if(mapManager != null) {
+			mapManager.getLocationManager().removeUpdates(mLocationListener);
+			mapManager.stop();
+		}    	
         super.onPause();
     }
 
@@ -151,7 +234,7 @@ public class MainTabActivity extends TabActivity implements
     protected void onDestroy(){
     	if (DEBUG) Log.d(TAG, "onDestroy");
     	super.onDestroy();
-    	unregisterReceiver(mTitleChangeReceiver);
+    	unregisterReceiver(mChangeReceiver);
     }
     
     @Override
@@ -330,6 +413,16 @@ public class MainTabActivity extends TabActivity implements
     	}    	
     }
     
+    private void doActionSetLocation(String location) {
+    	if (DEBUG) Log.d(TAG, "doActionSetLocation.location." + location);
+    	if (!TextUtils.isEmpty(location)) {
+			Editor e = mSharedPreferences.edit();
+			e.putString(Constants.LOCATION_KEY, location);
+			e.commit();    
+			mLoactionTextView.setText(getResources().getString(R.string.location_nearby_label) + location);
+    	}    	
+    }    
+    
     private void doActionEnterSearch() {
 
     }
@@ -497,4 +590,114 @@ public class MainTabActivity extends TabActivity implements
 			mLoactionTextView.setText(result);
 		}
 	}
+	
+    /** 
+     * 内部类实现MKSearchListener接口,用于实现异步搜索服务 
+     *  
+     */  
+    public class MySearchListener implements MKSearchListener {  
+        /** 
+         * 根据经纬度搜索地址信息结果 
+         *  
+         * @param result 搜索结果 
+         * @param iError 错误号（0表示正确返回） 
+         */  
+        @Override  
+        public void onGetAddrResult(MKAddrInfo result, int iError) {  
+            if (result == null) {  
+                return;  
+            }  
+            StringBuffer sb = new StringBuffer();  
+            // 经纬度所对应的位置   
+            sb.append(result.strAddr).append("/n");  
+            MKGeocoderAddressComponent mk = result.addressComponents;
+            if (mk != null) {
+            	sb.append(mk.city).append("/n");
+            	sb.append(mk.district).append("/n");
+            	sb.append(mk.province).append("/n");
+            	sb.append(mk.street).append("/n");
+            	sb.append(mk.streetNumber).append("/n");
+            }
+            Intent intent = new Intent(Constants.LOCATION_CHANGE_ACTION);
+            intent.putExtra(Constants.LOCATION_CHANGE_EXTRA, result.strAddr);
+            sendBroadcast(intent);
+            // 判断该地址附近是否有POI（Point of Interest,即兴趣点）   
+//            if (null != result.poiList) {  
+//                // 遍历所有的兴趣点信息   
+//                for (MKPoiInfo poiInfo : result.poiList) {  
+//                    sb.append("----------------------------------------").append("/n");  
+//                    sb.append("名称：").append(poiInfo.name).append("/n");  
+//                    sb.append("地址：").append(poiInfo.address).append("/n");  
+//                    sb.append("经度：").append(poiInfo.pt.getLongitudeE6() / 1000000.0f).append("/n");  
+//                    sb.append("纬度：").append(poiInfo.pt.getLatitudeE6() / 1000000.0f).append("/n");  
+//                    sb.append("电话：").append(poiInfo.phoneNum).append("/n");  
+//                    sb.append("邮编：").append(poiInfo.postCode).append("/n");  
+//                    // poi类型，0：普通点，1：公交站，2：公交线路，3：地铁站，4：地铁线路   
+//                    sb.append("类型：").append(poiInfo.ePoiType).append("/n");  
+//                }  
+//            }  
+            Log.d(TAG, "onGetAddrResult->" + sb.toString());
+            // 将地址信息、兴趣点信息显示在TextView上   
+//            addressTextView.setText(sb.toString());  
+//            if (mMKGeocoderAddressComponent == null || (mMKGeocoderAddressComponent != null && mMKGeocoderAddressComponent.street != null && !mMKGeocoderAddressComponent.street.equalsIgnoreCase(mk.street))) {
+//            	mMKGeocoderAddressComponent = mk;
+//            }
+        }  
+  
+        /** 
+         * 驾车路线搜索结果 
+         *  
+         * @param result 搜索结果 
+         * @param iError 错误号（0表示正确返回） 
+         */  
+        @Override  
+        public void onGetDrivingRouteResult(MKDrivingRouteResult result, int iError) {  
+        }  
+  
+        /** 
+         * POI搜索结果（范围检索、城市POI检索、周边检索） 
+         *  
+         * @param result 搜索结果 
+         * @param type 返回结果类型（11,12,21:poi列表 7:城市列表） 
+         * @param iError 错误号（0表示正确返回） 
+         */  
+        @Override  
+        public void onGetPoiResult(MKPoiResult result, int type, int iError) {  
+        	MKPoiInfo mkPointInfo = result.getPoi(0);
+        	Log.d(TAG, "onGetAddrResult->" + result.getAllPoi());
+        	Log.d(TAG, "onGetAddrResult->" + mkPointInfo != null ? mkPointInfo.city : null);
+        }  
+  
+        /** 
+         * 公交换乘路线搜索结果 
+         *  
+         * @param result 搜索结果 
+         * @param iError 错误号（0表示正确返回） 
+         */  
+        @Override  
+        public void onGetTransitRouteResult(MKTransitRouteResult result, int iError) {  
+        }  
+  
+        /** 
+         * 步行路线搜索结果 
+         *  
+         * @param result 搜索结果 
+         * @param iError 错误号（0表示正确返回） 
+         */  
+        @Override  
+        public void onGetWalkingRouteResult(MKWalkingRouteResult result, int iError) {  
+        }
+
+		@Override
+		public void onGetBusDetailResult(MKBusLineResult arg0, int arg1) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onGetSuggestionResult(MKSuggestionResult arg0, int arg1) {
+			// TODO Auto-generated method stub
+			
+		}  
+    }	
 }

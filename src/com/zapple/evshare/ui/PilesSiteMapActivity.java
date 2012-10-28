@@ -44,6 +44,7 @@ import com.zapple.evshare.R;
 import com.zapple.evshare.data.GetElecStationsResult;
 import com.zapple.evshare.data.Station;
 import com.zapple.evshare.transaction.WebServiceController;
+import com.zapple.evshare.util.Constants;
 
 import android.location.Location;
 import android.os.Bundle;
@@ -139,13 +140,21 @@ public class PilesSiteMapActivity extends MapActivity {
                     int latitude = (int) (1e6 * location.getLatitude());
 
                     /** 保存当前经纬度 */
-                    mCurLocation.put("longitude", location.getLongitude());
-                    mCurLocation.put("latitude", location.getLatitude());
+                    if (mCurLocation.get(Constants.LONGITUDE_KEY) == null || mCurLocation.get(Constants.LATITUDE_KEY) == null || mCurLocation.get(Constants.LONGITUDE_KEY) != location.getLongitude() || mCurLocation.get(Constants.LATITUDE_KEY) != location.getLatitude()) {
+                    	mCurLocation.put(Constants.LONGITUDE_KEY, location.getLongitude());
+                    	mCurLocation.put(Constants.LATITUDE_KEY, location.getLatitude());
+                        GeoPoint point = new GeoPoint(latitude, longitude);
+                        mMapView.getController().setCenter(point);
+                        /** 查询该经纬度值所对应的地址位置信息 */
+                        mMKSearch.reverseGeocode(new GeoPoint(latitude, longitude));                    	
+                    }
+//                    mCurLocation.put("longitude", location.getLongitude());
+//                    mCurLocation.put("latitude", location.getLatitude());
 
-                    GeoPoint point = new GeoPoint(latitude, longitude);
-                    mMapView.getController().setCenter(point);
-                    /** 查询该经纬度值所对应的地址位置信息 */
-                    mMKSearch.reverseGeocode(new GeoPoint(latitude, longitude));
+//                    GeoPoint point = new GeoPoint(latitude, longitude);
+//                    mMapView.getController().setCenter(point);
+//                    /** 查询该经纬度值所对应的地址位置信息 */
+//                    mMKSearch.reverseGeocode(new GeoPoint(latitude, longitude));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

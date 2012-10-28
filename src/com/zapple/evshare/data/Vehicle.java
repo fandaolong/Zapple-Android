@@ -24,7 +24,7 @@ import android.net.Uri;
 public final class Vehicle {
     private static final String TAG = "Vehicle";
     private static final boolean DEBUG = true;
-    private static final String AUTHORITY = "com.zapple.rental.provider.vehicle";
+    private static final String AUTHORITY = "com.zapple.evshare.provider.vehicle";
     
     // Constructor
     public Vehicle() {

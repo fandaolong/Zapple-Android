@@ -44,9 +44,11 @@ public class Constants {
 	
 	// intent action
 	public static final String TITLE_CHANGE_ACTION = "com.zapple.evshare.TITLE_CHANGE_ACTION";
+	public static final String LOCATION_CHANGE_ACTION = "com.zapple.evshare.LOCATION_CHANGE_ACTION";
 	
 	// extra
 	public static final String TITLE_CHANGE_EXTRA = "com.zapple.evshare.TITLE_CHANGE_EXTRA";
+	public static final String LOCATION_CHANGE_EXTRA = "com.zapple.evshare.LOCATION_CHANGE_EXTRA";
 	public static final String SUBMIT_ORDER_EXTRA = "submit_order_extra";
 	public static final String WHICH_MANAGEMENT_EXTRA = "which_management_extra";
 	public static final String FLOW_MODE_EXTRA = "flow_mode_extra";
@@ -56,6 +58,9 @@ public class Constants {
 	
 	// key prefrence
 	public static final String LOCATION_KEY = "location_key";
+	public static final String LONGITUDE_KEY = "longitude_key";
+	public static final String LATITUDE_KEY = "latitude_key";
+	
 	
 	public static final int ORDER_STATUS_WAITING_TAKE = 0;
 	public static final int ORDER_STATUS_UNPAID = 1;
